@@ -22,7 +22,7 @@ for dep in "${dependencies[@]}"; do
     fi
 done
 
-!wget -O "$SCRIPT_DIR"/clonezilla.iso https://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/3.1.2-9/clonezilla-live-3.1.2-9-amd64.iso/download?use_mirror=sitsa
+wget -O "$SCRIPT_DIR"/clonezilla.iso https://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/3.1.2-9/clonezilla-live-3.1.2-9-amd64.iso/download?use_mirror=sitsa
 
 #IPTABLES
 sudo ufw allow ssh
