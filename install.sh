@@ -10,7 +10,7 @@ sudo chmod +x /usr/local/bin/pumi
 
 
 # Define dependencies
-dependencies=("crontab" "expect" "wakeonlan" "grub" "ssh" "openssh-client" "ssmtp" "mpack" "iptables-persistent" "sshpass") #anymore?
+dependencies=("crontab" "expect" "wakeonlan" "grub" "ssh" "openssh-client" "ssmtp" "mpack" "iptables-persistent" "sshpass" "wget") #anymore?
 
 # Check and install dependencies
 for dep in "${dependencies[@]}"; do
@@ -21,6 +21,8 @@ for dep in "${dependencies[@]}"; do
         echo "$dep is already installed."
     fi
 done
+
+!wget -O "$SCRIPT_DIR"/clonezilla.iso https://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/3.1.2-9/clonezilla-live-3.1.2-9-amd64.iso/download?use_mirror=sitsa
 
 #IPTABLES
 sudo ufw allow ssh
