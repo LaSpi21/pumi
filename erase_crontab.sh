@@ -1,11 +1,33 @@
 #/bin/bash
 confirm=n
-read -p "Confirmar que se quieren borrar todas las acciones programadas [y/n]: " confirm_input
+read -p "Indique que acciones borrar, ingrese T para borrar TODAS las acciones, un número para borrar la acción de la línea que corresponda a ese número o c para cancelar [t/n°/c]: " confirm_input
+
 case $confirm_input in
-  [sSyY]) confirm=true ;;
+  [tT]) confirm=true ;;
 esac
+
+case $confirm_input in
+  [cCnN]) confirm=false ;;
+esac
+
+
 
 if [ "$confirm" = true ]; then
 echo borrando todas las acciones programadas
 sudo crontab -r
 fi
+
+expr "$confirm_input" + 1 2> /dev/null
+if [ $? = 0 ]
+then
+confirm="$confirm_input"d
+sudo crontab -l | grep -v '^#' | awk NF | sed "$confirm" | sudo crontab -
+fi
+
+
+
+
+
+
+
+
