@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo iniciando Imaging
+echo iniciando Pumi
 
 echo "Selecciona una acción:"
 echo "1. Programar un cambio de imagen"
@@ -16,7 +16,7 @@ echo "5. Recuperar maquina"
 echo "6. Encender o apagar maquinas"
 echo "7. Cambiar dirección del repositorio"
 echo "8. Ver las acciones programadas"
-echo "9. Borrar todas las acciones programadas"
+echo "9. Borrar acciones programadas"
 
 read opcion
 
@@ -60,3 +60,5 @@ case $opcion in
         echo "Opción no válida. Por favor, selecciona 1, 2, 3, 4 o 5."
         ;;
 esac
+
+
