@@ -6,6 +6,7 @@ log_csv="$SCRIPT_DIR/log/log.csv"
 fail_csv="$SCRIPT_DIR/log/failed.csv"
 historic="$SCRIPT_DIR/log/historic.csv"
 new_csv="$SCRIPT_DIR/log/new.csv"
+ssh_csv="$SCRIPT_DIR/log/ssh.csv"
 temp="$SCRIPT_DIR/log/temp.csv"
 mail=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '4p')
 
@@ -66,7 +67,7 @@ wait
 
 while IFS=, read -r MAC IP Serial user Image p; do
    adding_ssh "$MAC" "$IP" "$Serial" "$user" "$Image" "$p" &
-done < "$new_csv"
+done < "$ssh_csv"
 
 wait
 
