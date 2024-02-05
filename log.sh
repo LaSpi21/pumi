@@ -9,7 +9,8 @@ new_csv="$SCRIPT_DIR/log/new.csv"
 temp="$SCRIPT_DIR/log/temp.csv"
 mail=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '4p')
 
-
+day=$(date +%d)
+month=$(date +%m)
 
 retry=false
 onetimeonly=false
@@ -90,7 +91,7 @@ fi
 
 if [ "$retry" = true ]; then
     if [ -n "$(head -n 1 $fail_csv)" ]; then
- 	sudo bash "$SCRIPT_DIR"/schedule.sh -f -i "$global_image";
+ 	sudo bash "$SCRIPT_DIR"/schedule.sh -d "$day" -M "$month" -u -f -i "$global_image";
 fi
 fi
 
