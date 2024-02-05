@@ -18,9 +18,9 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 # Valores por defecto
-day=$(date +%d)  # Obtener el día actual del mes
+day="*"
 current_time=$(date +"%H:%M")
-month=$(date +%m)
+month="*"
 future_time=$(date -d "5 minutes" +"%H:%M")
 IFS=':' read -r current_hour current_minute <<< "$current_time"
 IFS=':' read -r future_hour future_minute <<< "$future_time"
