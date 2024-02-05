@@ -59,7 +59,8 @@ batching() {
     local p=$6
 
     sudo echo  "$MAC","$IP","$Serie","$user","$Image", >> "$SCRIPT_DIR"/log/log.csv
-    sudo  echo  "$MAC","$IP","$Serie","$user","$Image","$p" >> "$SCRIPT_DIR"/log/new.csv
+    sudo echo  "$MAC","$IP","$Serie","$user","$Image", >> "$SCRIPT_DIR"/log/new.csv
+    sudo  echo  "$MAC","$IP","$Serie","$user","$Image","$p" >> "$SCRIPT_DIR"/log/ssh.csv
 
 #    sudo sshpass -p "$p" ssh-copy-id -o StrictHostKeyChecking=no "$user"@"$IP"
 
