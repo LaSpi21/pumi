@@ -44,7 +44,7 @@ wake() {
 
     wakeonlan "$mac"
 
-    sleep 100
+    sleep 150
 
 }
 
