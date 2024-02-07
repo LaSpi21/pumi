@@ -48,3 +48,5 @@ echo "$entrada_grub" | sudo tee -a /etc/grub.d/40_custom > /dev/null
 
 sudo bash $SCRIPT_DIR/add_image.sh
 sudo bash $SCRIPT_DIR/ssh_add.sh
+
+echo Instalación completa
