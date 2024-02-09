@@ -13,6 +13,14 @@ repo=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '1p')
 repo_mount=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p')
 pumi_mount=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '3p')
 
+uuid=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p')
+device_path=$(blkid -U "$uuid" -s UUID -o device)
+# Check if the disk is already mounted
+if ! findmnt -rno SOURCE,TARGET -S UUID="$uuid" | grep -q "^.*"; then
+    # If not mounted, then attempt to mount the disk
+    sudo mkdir -p "$repo" && sudo mount "$device_path" "$repo"
+  
+
 
 # Check if the script is run with sudo
 if [ "$EUID" -ne 0 ]; then
