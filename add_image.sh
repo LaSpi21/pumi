@@ -19,7 +19,7 @@ device_path=$(blkid -U "$uuid" -s UUID -o device)
 if ! findmnt -rno SOURCE,TARGET -S UUID="$uuid" | grep -q "^.*"; then
     # If not mounted, then attempt to mount the disk
     sudo mkdir -p "$repo" && sudo mount "$device_path" "$repo"
-  
+fi
 
 
 # Check if the script is run with sudo
