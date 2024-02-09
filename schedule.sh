@@ -44,8 +44,9 @@ uso() {
 # Función para validar el día
 validar_dia() {
   local dia=$1
-  if [[ ! "$dia" =~ ^[0-9]+$ || $dia -lt 0 || $dia -gt 31 ]]; then
-    echo -e "${RED}Día inválido. El día debe ser un número entre 0 y 31.${NC}"
+  dia=$(expr $dia + 0)
+  if [[ ! "$dia" =~ ^[0-9]+$ || $dia -lt 1 || $dia -gt 31 ]]; then
+    echo -e "${RED}Día inválido. El día debe ser un número entre 1 y 31.${NC}"
     uso
   fi
 }
@@ -53,8 +54,10 @@ validar_dia() {
 # Función para validar el mes
 validar_mes() {
   local mes=$1
-  if [[ ! "$mes" =~ ^[0-9]+$ || $dia -lt 0 || $dia -gt 12 ]]; then
-    echo -e "${RED}Mes inválido. El mes debe ser un número entre 0 y 12.${NC}"
+  mes=$(expr $mes + 0)
+  echo $mes
+  if [[ ! "$mes" =~ ^[0-9]+$ || $mes -lt 1 || $mes -gt 12 ]]; then
+    echo -e "${RED}Mes inválido. El mes debe ser un número entre 1 y 12.${NC}"
     uso
   fi
 }
@@ -63,6 +66,7 @@ validar_mes() {
 # Función para validar la hora
 validar_hora() {
   local hora=$1
+  hora=$(expr $hora + 0)
   if [[ ! "$hora" =~ ^[0-9]+$ || $hora -lt 0 || $hora -gt 23 ]]; then
     echo -e "${RED}Hora inválida. La hora debe ser un número entre 0 y 23.${NC}"
     uso
@@ -72,6 +76,7 @@ validar_hora() {
 # Función para validar el minuto
 validar_minuto() {
   local min=$1
+  min=$(expr $min + 0)
   if [[ ! "$min" =~ ^[0-9]+$ || $min -lt 0 || $min -gt 59 ]]; then
     echo -e "${RED}Minuto inválido. El minuto debe ser un número entre 0 y 59.${NC}"
     uso
@@ -128,7 +133,7 @@ if [ "$modo_interactivo" = true ]; then
   read -p "Ingresa el día de la semana en el cual iniciar (Mon, Tue, Wed, etc. Opcional, ingresa * o presiona Enter para no ingresar un día): " user_weekday
   read -p "Ingresa la hora a la cual iniciar (0-23): " user_hour
   read -p "Ingresa el minuto en el cual iniciar (0-59): " user_min
-  read -p "Ingresa el numero de día en el cual iniciar (0-31,*) Ingresa * para realizarlo todos los días que cumplan con el resto de criterios: " user_day
+  read -p "Ingresa el numero de día en el cual iniciar (1-31,*) Ingresa * para realizarlo todos los días que cumplan con el resto de criterios: " user_day
   read -p "Ingresa el mes en el cual iniciar (1-12,*)  Ingresa * para realizarlo todos los meses que cumplan con el resto de criterios: " user_month
   echo Imagenes disponibles
   column_values=($(ls -d "$repo"*-img | xargs -I {} basename {} '-img'))
@@ -159,7 +164,6 @@ if [ "$modo_interactivo" = true ]; then
   [[ -n "$user_min" ]] && { validar_minuto "$user_min"; min="$user_min"; }
   [[ -n "$user_month" ]] && { validar_mes "$user_month"; month="$user_month"; }
   [[ -n "$user_image" ]] && { validar_nombre_imagen "$user_image"; image_name="$user_image"; }
-
 
 
 fi
