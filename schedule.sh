@@ -33,6 +33,13 @@ modo_interactivo=true
 retry=false
 onetimeonly=false
 
+uuid=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p')
+device_path=$(blkid -U "$uuid" -s UUID -o device)
+# Check if the disk is already mounted
+if ! findmnt -rno SOURCE,TARGET -S UUID="$uuid" | grep -q "^.*"; then
+    # If not mounted, then attempt to mount the disk
+    sudo mkdir -p "$repo" && sudo mount "$device_path" "$repo"
+  
 
 # Función para mostrar el uso del script
 uso() {
