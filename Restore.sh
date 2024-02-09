@@ -60,6 +60,8 @@ if [ "$onetimeonly" = true ]; then
   cron_line="$cron_line -o"
 fi
 
+cron_line="$cron_line && crontab -l | grep -v $SCRIPT_DIR/log.sh | crontab -"
+
 temp_file=$(mktemp)
 
 sudo crontab -l -u root > "$temp_file"
