@@ -98,10 +98,12 @@ else
 
   # Añadir las variables al archivo CSV"
   sudo echo  "$MAC","$IP","$Serie","$user","$Image", >> "$SCRIPT_DIR"/log/log.csv
-  sudo  echo  "$MAC","$IP","$Serie","$user","$Image","$p" >> "$SCRIPT_DIR"/log/new.csv
-
+  sudo  echo  "$MAC","$IP","$Serie","$user","$Image", >> "$SCRIPT_DIR"/log/new.csv
+  sudo  echo  "$MAC","$IP","$Serie","$user","$Image","$p" >> "$SCRIPT_DIR"/log/ssh.csv
 #  sudo sshpass -p "$p" ssh-copy-id -o StrictHostKeyChecking=no "$user"@"$IP"
 
 #  sudo expect "$SCRIPT_DIR"/ssh_add.exp "$user" "$IP"
 
 fi
+
+echo Se agregaron las maquinas indicadas #Indicar MACs de las imagenes
