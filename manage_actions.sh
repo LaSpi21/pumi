@@ -21,6 +21,7 @@ while true; do
     case $opcion in
 
         1)
+            echo "Programando una nueva acción"
             sudo bash "$SCRIPT_DIR"/schedule.sh
             ;;
 
