@@ -6,6 +6,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 while true; do
+    clear
     echo "Selecciona una acción:"
     echo "1. Agregar nueva imagen"
     echo "2. Cambiar dirección del repositorio"
