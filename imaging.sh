@@ -9,7 +9,7 @@ NC='\033[0m'
 
 while true; do
     clear
-    echo Pumi
+    echo "Pumi. Menú principal."
     echo "Selecciona una acción:"
     echo "1. Programar un cambio de imagen"
     echo "2. Configurar imagenes"
