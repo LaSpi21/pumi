@@ -5,10 +5,11 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo iniciando Pumi
+
 
 while true; do
     clear
+    echo Pumi
     echo "Selecciona una acción:"
     echo "1. Programar un cambio de imagen"
     echo "2. Configurar imagenes"
