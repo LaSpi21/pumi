@@ -56,6 +56,7 @@ while true; do
         9)
            echo "Saliendo.."
            break
+           ;;
         *)
             echo "Opción no válida. Por favor, selecciona 1, 2, 3, 4 o 5."
             ;;
