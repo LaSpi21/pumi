@@ -29,7 +29,7 @@ while true; do
             sudo bash "$SCRIPT_DIR"/schedule.sh
             ;;
         2)
-            echo "Configurar imagenes"
+            echo "Configurar imágenes"
             sudo bash "$SCRIPT_DIR"/manage_images.sh
             ;;
         3)
