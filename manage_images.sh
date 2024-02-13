@@ -7,6 +7,7 @@ NC='\033[0m'
 
 while true; do
     clear
+    echo "Pumi. Configurar imágenes"
     echo "Selecciona una acción:"
     echo "1. Agregar nueva imagen"
     echo "2. Cambiar dirección del repositorio"
