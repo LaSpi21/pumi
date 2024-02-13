@@ -13,49 +13,38 @@ while true; do
     echo "Selecciona una acción:"
     echo "1. Programar un cambio de imagen"
     echo "2. Configurar imagenes"
-    echo "3. Agregar maquina/s"
-    echo "4. Quitar maquina"
-    echo "5. Recuperar maquina"
-    echo "6. Encender o apagar maquinas"
-    echo "7. Ver las acciones programadas"
-    echo "8. Borrar acciones programadas"
-    echo "9. Salir"
+    echo "3. Configurar máquinas"
+    echo "4. Encender o apagar maquinas"
+    echo "5. Ver las acciones programadas"
+    echo "6. Borrar acciones programadas"
+    echo "7. Salir"
     
     read opcion
     
     case $opcion in
         1)
-            echo "Programando un cambio de imagen"
             sudo bash "$SCRIPT_DIR"/schedule.sh
             ;;
+            
         2)
-            echo "Configurar imágenes"
             sudo bash "$SCRIPT_DIR"/manage_images.sh
             ;;
+            
         3)
-            echo "Agreando maquina/s"
-            sudo bash "$SCRIPT_DIR"/ssh_add.sh
+            sudo bash "$SCRIPT_DIR"/manage_machines.sh
             ;;
+
         4)
-            echo "Quitando maquina"
-            sudo bash "$SCRIPT_DIR"/ssh_remove.sh
-            ;;
-        5)
-            echo "Recuperando maquina"
-            sudo bash "$SCRIPT_DIR"/ssh_recover.sh
-            ;;
-    
-        6)
             sudo bash "$SCRIPT_DIR"/power.sh
             ;;
     
-        7)
+        5)
             sudo bash "$SCRIPT_DIR"/view_crontab.sh
             ;;
-        8)
+        6)
             sudo bash "$SCRIPT_DIR"/erase_crontab.sh
             ;;
-        9)
+        7)
            echo "Saliendo.."
            break
            ;;
