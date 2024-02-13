@@ -11,7 +11,7 @@ while true; do
     echo "Selecciona una acción:"
     echo "1. Agregar nueva imagen"
     echo "2. Cambiar dirección del repositorio"
-    echo "3. Volver"
+    echo "3. Volver al menú principal"
 
     read opcion
     
@@ -21,13 +21,14 @@ while true; do
             sudo bash "$SCRIPT_DIR"/add_image.sh
             ;;
         2)
+            echo "Cambiando la dirección del repositorio"
             sudo bash "$SCRIPT_DIR"/change_repo_path.sh
             ;;
         3)
             break
             ;;
         *)
-            echo "Opción no válida. Por favor, selecciona 1, 2 o 3."
+            echo "Opción no válida. Por favor, selecciona 1, 2 ó 3."
             ;;
     esac
 done
