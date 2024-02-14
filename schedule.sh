@@ -224,3 +224,6 @@ rm "$temp_file"
 
 
 echo Se agregó "$cron_line"
+
+echo "Presione cualquier tecla para continuar"
+read -n 1 -s -r -p ""
