@@ -23,8 +23,7 @@ then
 confirm="$confirm_input"d
 sudo crontab -l | grep -v '^#' | awk NF | sed "$confirm" | sudo crontab -
 fi
-echo "Presione cualquier tecla para continuar"
-read -n 1 -s -r -p ""
+
 
 
 
