@@ -20,7 +20,3 @@ sed -i "1s|.*|$repo_path|" "$repo_path_file"
 ID_repo=$(sudo blkid -o value -s UUID $(\df --output=source "$repo_path"|tail -1))
 
 sed -i "2s|.*|$ID_repo|" "$repo_path_file"
-
-echo "Presione cualquier tecla para continuar"
-read -n 1 -s -r -p ""
-
