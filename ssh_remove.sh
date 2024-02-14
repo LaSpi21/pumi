@@ -86,3 +86,5 @@ if [[ "$opcion" == "i" ]]; then
     sudo awk -F, -v pattern=$IP '$2 != pattern' OFS="," "$new_csv" > temp.csv && sudo mv temp.csv "$new_csv"
 
 fi
+echo "Presione cualquier tecla para continuar"
+read -n 1 -s -r -p ""
