@@ -7,7 +7,19 @@ NC='\033[0m'
 
 
 
+first_iteration=true
+
 while true; do
+
+    # Check if it's not the first iteration
+    if [ "$first_iteration" != true ]; then
+        echo "Presione cualquier tecla para continuar"
+        read -n 1 -s -r -p ""
+    fi
+
+    # Set first_iteration to false after the first iteration
+    first_iteration=false
+
     clear
     echo "Pumi. Configurar máquinas."
     echo "Selecciona una acción:"
