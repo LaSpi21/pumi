@@ -6,3 +6,5 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 cat <(sudo crontab -l | grep -v '^#' | awk NF)
+echo "Presione cualquier tecla para continuar"
+read -n 1 -s -r -p ""
