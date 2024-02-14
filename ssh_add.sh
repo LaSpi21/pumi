@@ -107,3 +107,6 @@ else
 fi
 
 echo Se agregaron las maquinas indicadas #Indicar MACs de las imagenes
+
+echo "Presione cualquier tecla para continuar"
+read -n 1 -s -r -p ""
