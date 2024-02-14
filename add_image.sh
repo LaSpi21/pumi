@@ -97,3 +97,6 @@ if [ "$confirm" = y ]; then
 else
 echo Cancelando..
 fi
+
+echo "Presione cualquier tecla para continuar"
+read -n 1 -s -r -p ""
