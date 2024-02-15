@@ -1,4 +1,4 @@
-#!/bin/bash
+v#!/bin/bash
 
 RED='\033[0;31m'
 NC='\033[0m'
@@ -45,4 +45,4 @@ echo "$mail" | sudo tee -a "$repo_path_file" > /dev/null
 
 echo "45" | sudo tee -a "$repo_path_file" > /dev/null
 
-echo pumi configurado
+echo "pumi configurado, el tiempo maximo por defecto para clonar imagenes es 45 minutos, puede cambiarlo desde pumi>Configurar acciones programadas"
