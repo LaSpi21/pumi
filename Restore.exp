@@ -20,10 +20,13 @@ spawn awk -f $SCRIPT_DIR/log/Macs.awk "$SCRIPT_DIR/log/Macs.csv"
     expect -re "(.*)\r\n"
     set mac_address $expect_out(1,string)
 
+set increment [exec cat "$SCRIPT_DIR/Repo_path" | sed -n '5p']
+
+puts $increment
 
 
 
-spawn ocs-live-feed-img -cbm netboot -dm auto-detect -lscm massive-deployment -mdst from-image -g auto -e1 auto -e2 -r -x -j2 -k0 -sc0 -p shutdown -md multicast --clients-to-wait 36 --max-time-to-wait 120 start $image_name-img sda
+spawn ocs-live-feed-img -cbm netboot -dm auto-detect -lscm massive-deployment -mdst from-image -g auto -e1 auto -e2 -r -x -j2 -k0 -sc0 -p shutdown -md multicast --clients-to-wait 40 --max-time-to-wait 120 start $image_name-img sda
 
 expect {
     {//NOTE// If you choose "yes", you have to make sure your DHCP server provides enough number of IP address for all the clients. Besides, this mechanism is risky because all the PXE or uEFI network booting clients will enter DRBL or Clonezilla mode. Please make sure this is what you want.} {
@@ -34,7 +37,7 @@ expect {
    {foreach element $mac_address {
         spawn wakeonlan $element
         after 1000}
-    spawn shutdown -r +40;
+    spawn shutdown -r "+$increment";
     exp_continue}
 	}
 
