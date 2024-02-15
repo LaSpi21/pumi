@@ -11,6 +11,8 @@ else
     user_script=$SUDO_USER
 fi
 
+increment=$(($(cat "$SCRIPT_DIR/Repo_path"| sed -n '4p') + 15))
+
 log_csv="$SCRIPT_DIR/log/log.csv"
 macs_csv="$SCRIPT_DIR/log/Macs.csv"
 new_csv="$SCRIPT_DIR/log/new.csv"
@@ -18,10 +20,10 @@ fail_csv="$SCRIPT_DIR/log/failed.csv"
 failed=false
 new=false
 image_name=""
-log_hour=$(date -d '+1 hour' "+%H")
-log_min=$(date -d '+1 hour' "+%M")
-log_day=$(date -d '+1 hour' "+%d")
-log_month=$(date -d '+1 hour' "+%m")
+log_hour=$(date -d "+$increment minutes" "+%H")
+log_min=$(date -d  "+$increment minutes" "+%M")
+log_day=$(date -d  "+$increment minutes" "+%d")
+log_month=$(date -d  "+$increment minutes" "+%m")
 retry=false
 onetimeonly=false
 
