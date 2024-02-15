@@ -43,4 +43,6 @@ echo "$ID_pumi" | sudo tee -a "$repo_path_file" > /dev/null
 
 echo "$mail" | sudo tee -a "$repo_path_file" > /dev/null
 
+echo "45" | sudo tee -a "$repo_path_file" > /dev/null
+
 echo pumi configurado
