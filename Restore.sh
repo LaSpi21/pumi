@@ -11,7 +11,7 @@ else
     user_script=$SUDO_USER
 fi
 
-increment=$(($(cat "$SCRIPT_DIR/Repo_path"| sed -n '4p') + 15))
+increment=$(($(cat "$SCRIPT_DIR/Repo_path"| sed -n '5p') + 15))
 
 log_csv="$SCRIPT_DIR/log/log.csv"
 macs_csv="$SCRIPT_DIR/log/Macs.csv"
