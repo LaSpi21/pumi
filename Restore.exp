@@ -1,36 +1,37 @@
 #!/usr/bin/expect
 
+#
 
-# Get the directory of the current script
+#Indica la ruta del archivo para ubicar de forma relativa el resto
 set SCRIPT_DIR [file normalize [file dirname $argv0]]
-
-
-# Use the directory for further actions
 puts $SCRIPT_DIR
 
+#Toma el nombre de la imagen del primer parametro
 set image_name [lrange $argv 0 0]
-
 puts $image_name
 
 
+#Toma el tiempo de espera hasta reiniciar clonezilla del segundo parametro
 set increment [lrange $argv 1 1]
 puts $increment
 
+#Toma la cantidad de maquinas en el .log del tercer parametro
 set num [lrange $argv 2 2]
 puts $num
 
 
 set timeout -1
 
-
+#Toma las Macs del archivo /pumi/log/Macs.csv que genero Restore.sh
 spawn awk -f $SCRIPT_DIR/log/Macs.awk "$SCRIPT_DIR/log/Macs.csv"
     expect -re "(.*)\r\n"
     set mac_address $expect_out(1,string)
 
 
-
+#Le pasa a clonezilla el codigo que ejecturá
 spawn ocs-live-feed-img -cbm netboot -dm auto-detect -lscm massive-deployment -mdst from-image -g auto -e1 auto -e2 -r -x -j2 -k0 -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img sda
 
+#Automatiza las interacciones con el usuario, despierta cada maquina en Macs.csv y luego reinicia el servidor.
 expect {
     {//NOTE// If you choose "yes", you have to make sure your DHCP server provides enough number of IP address for all the clients. Besides, this mechanism is risky because all the PXE or uEFI network booting clients will enter DRBL or Clonezilla mode. Please make sure this is what you want.} {
         send "Y\r"
