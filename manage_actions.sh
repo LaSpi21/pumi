@@ -26,6 +26,7 @@ while true; do
     echo "1. Programar un cambio de imagen"
     echo "2. Ver las acciones programadas"
     echo "3. Borrar acciones programadas"
+    echo "4. Cambiar el tiempo limite para el cambio de imagen"
     echo "4. Volver al menú principal"
 
     read opcion
@@ -44,6 +45,9 @@ while true; do
             sudo bash "$SCRIPT_DIR"/erase_crontab.sh
             ;;
         4)
+            sudo bash "$SCRIPT_DIR"/change_timeout.sh
+            ;;
+        5)
            break
            ;;
         *)
