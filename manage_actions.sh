@@ -27,7 +27,7 @@ while true; do
     echo "2. Ver las acciones programadas"
     echo "3. Borrar acciones programadas"
     echo "4. Cambiar el tiempo limite para el cambio de imagen"
-    echo "4. Volver al menú principal"
+    echo "5. Volver al menú principal"
 
     read opcion
     
