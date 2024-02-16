@@ -1,38 +1,28 @@
 #!/bin/bash
 
+#Agrega una entrada de grub para una nueva imagen
 
 RED='\033[0;31m'
 NC='\033[0m'
 
+#Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-repo=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '1p')
-#repo_mount=$(blkid -o device -l -t UUID=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p'))
-#pumi_mount=$(blkid -o device -l -t UUID=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '3p'))
 
+#Toma la infromacion del repositorio y de pumi (direccion, uuid de la particion) y otras variables del archivo /pumi/Repo_path
+repo=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '1p')
 repo_mount=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p')
 pumi_mount=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '3p')
 increment=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '5p')
 num=$(wc -l < "$SCRIPT_DIR"/log/log.csv)
-
 uuid=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p')
 device_path=$(blkid -U "$uuid" -s UUID -o device)
-# Check if the disk is already mounted
+
+
+# Se asegura que el disco/particion repositorio se encuentre montado
 if ! findmnt -rno SOURCE,TARGET -S UUID="$uuid" | grep -q "^.*"; then
     # If not mounted, then attempt to mount the disk
     sudo mkdir -p "$repo" && sudo mount "$device_path" "$repo"
 fi
-
-
-# Check if the script is run with sudo
-if [ "$EUID" -ne 0 ]; then
-    # Script is not running as root, use the current username
-    user=$(id -u -n)
-else
-    # Script is running as root (via sudo), use the original username
-    user=$SUDO_USER
-fi
-
-
 
 uso() {
     echo "Uso: $0 <nombre>"
@@ -42,7 +32,7 @@ uso() {
 if [ "$#" -eq 0 ]; then
     echo Imagenes disponibles
     column_values=($(ls -d "$repo"*-img | xargs -I {} basename {} '-img'))
-    # Prompt user with autocompletion
+    # Permite seleccionar la imagen de una lista, las imagenes deben cumplir con que su nombre sea *-img
     PS3="Select a value: "
     select nombre in "${column_values[@]}"; do
         if [[ -n $nombre ]]; then
@@ -56,7 +46,7 @@ else
     nombre=$1
 fi
 
-# Escapar caracteres especiales
+# Escapa caracteres especiales
 nombre_e=$(echo "$nombre" | sed 's/[^a-zA-Z0-9]/_/g')
 imageimg="${nombre_e}-img"
 
@@ -65,17 +55,7 @@ if [[ ! -d "$repo$imageimg" ]]; then
     uso
 fi
 
-
-
-# Definir la entrada de GRUB
-#entrada_grub="menuentry 'Restore $nombre_e'{
-#ISO="$SCRIPT_DIR/clonezilla.iso"
-#search --set -f "\$ISO"
-#loopback loop "\$ISO"
-#linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset locales= keyboard-layouts= ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch="no" vga=791 ip= net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
-#initrd (loop)/live/initrd.img
-#}"
-
+#Definir la entrada de GRUB
 entrada_grub="menuentry 'Restore $nombre_e'{
 ISO="$SCRIPT_DIR/clonezilla.iso"
 search --set -f "\$ISO"
