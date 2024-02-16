@@ -15,8 +15,12 @@ esac
 if [ "$confirm" = true ]; then
 echo borrando todas las acciones programadas
 sudo crontab -r
+exit
 fi
 
+if [ "$confirm" = false ]; then
+exit
+fi
 
 if [ $? = 0 ]
 then
