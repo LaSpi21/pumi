@@ -20,7 +20,7 @@ validar_minuto() {
   fi
 }
 
-read -p "Ingresa el nuevo tiempo limite en minutos" minutos
+read -p "Ingresa el nuevo tiempo limite en minutos: " minutos
 
 validar_minuto "$minutos"
 
