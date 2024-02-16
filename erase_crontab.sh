@@ -17,7 +17,7 @@ echo borrando todas las acciones programadas
 sudo crontab -r
 fi
 
-expr "$confirm_input" + 1 2> /dev/null
+#expr "$confirm_input" + 0 2> /dev/null
 if [ $? = 0 ]
 then
 confirm="$confirm_input"d
