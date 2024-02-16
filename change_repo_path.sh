@@ -1,6 +1,8 @@
 #!/bin/bash
 
+#Modifica la dirección del repositorioo (y su uuid) en el archivo /pumi/Repo_path
 
+#Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 BLUE='\033[0;34m'
@@ -14,7 +16,7 @@ echo Configurando repositorio de imagenes
 
 read -e -p "Ingresa la nueva ruta al repositorio (ej. /media/user/repo/)" repo_path
 
-
+#Cambia las lineas 1 y 2 por la información del nuevo path indicado
 sed -i "1s|.*|$repo_path|" "$repo_path_file"
 
 ID_repo=$(sudo blkid -o value -s UUID $(\df --output=source "$repo_path"|tail -1))
