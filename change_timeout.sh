@@ -1,5 +1,8 @@
 #/bin/bash
 
+#Cambia el tiempo limite que espera clonezilla para reiniciarse en el archivo /pumi/Repo_path
+
+#Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 BLUE='\033[0;34m'
@@ -11,6 +14,7 @@ minutos=""
 
 echo "Cambiando el tiempo limite del cambio de imagen."
 
+#Funcion que valida que los minutos indicados sean un numero entero
 validar_minuto() {
   local min=$1
   min=$(expr $min + 0)
@@ -24,4 +28,5 @@ read -p "Ingresa el nuevo tiempo limite en minutos: " minutos
 
 validar_minuto "$minutos"
 
+#Modifica la linea de /pumi/Repo_path indicada
 sed -i "5s|.*|$minutos|" "$repo_path_file"
