@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 
-#
+#Este es el archivo que correrá clonezilla en su shell, contiene todos los parametros y automatizaciones requeridas para que el proceso sea desatendido.
 
 #Indica la ruta del archivo para ubicar de forma relativa el resto
 set SCRIPT_DIR [file normalize [file dirname $argv0]]
