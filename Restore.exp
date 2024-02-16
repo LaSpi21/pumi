@@ -13,16 +13,16 @@ set image_name [lrange $argv 0 0]
 puts $image_name
 
 
+set increment [lrange $argv 1 1]
+puts $increment
+
+
 set timeout -1
 
 
 spawn awk -f $SCRIPT_DIR/log/Macs.awk "$SCRIPT_DIR/log/Macs.csv"
     expect -re "(.*)\r\n"
     set mac_address $expect_out(1,string)
-
-set increment [exec cat "$SCRIPT_DIR/Repo_path" | sed -n '5p']
-
-puts $increment
 
 
 
