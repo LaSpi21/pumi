@@ -25,7 +25,7 @@ echo "$conf" | sudo tee -a /etc/ssmtp/ssmtp.conf > /dev/null
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 repo_path_file="$SCRIPT_DIR/Repo_path"
 repo_path=""
-mail=""
+
 
 
 echo Configurando repositorio de imagenes
