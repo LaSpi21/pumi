@@ -8,14 +8,6 @@
 #Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# Toma el nombre de usuario por cuestiones de pathing
-if [ "$EUID" -ne 0 ]; then
-    # Script is not running as root, use the current username
-    user_script=$(id -u -n)
-else
-    # Script is running as root (via sudo), use the original username
-    user_script=$SUDO_USER
-fi
 
 #increment es la cantidad de tiempo que espera clonezilla para reiniciarse en minutos, se encuentra en el archivo /pumi/Repo_path
 increment=$(($(cat "$SCRIPT_DIR/Repo_path"| sed -n '5p') + 30))
