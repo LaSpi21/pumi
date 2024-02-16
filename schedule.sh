@@ -63,7 +63,6 @@ validar_dia() {
 validar_mes() {
   local mes=$1
   mes=$(expr $mes + 0)
-  echo $mes
   if [[ ! "$mes" =~ ^[0-9]+$ || $mes -lt 1 || $mes -gt 12 ]]; then
     echo -e "${RED}Mes inválido. El mes debe ser un número entre 1 y 12.${NC}"
     uso
