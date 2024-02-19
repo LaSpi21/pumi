@@ -10,27 +10,26 @@ case $confirm_input in
 esac
 
 case $confirm_input in
-  [cCnN]) confirm=false ;;
+  [^tT0-9]) confirm=false ;;
 esac
 
 #en caso de haberse ingresado T/t se borran todas acciones programadas en crontab,
 #en caso de ingresarse un numero se buscará borrar la entrada de numero de línea correspondiente
 
 if [ "$confirm" = true ]; then
-echo borrando todas las acciones programadas
+echo "Borrando todas las acciones programadas"
 sudo crontab -r
 exit
 fi
 
 if [ "$confirm" = false ]; then
+echo "Cancelando operación"
 exit
 fi
 
-if [ $? = 0 ]
-then
 confirm="$confirm_input"d
 sudo crontab -l | grep -v '^#' | awk NF | sed "$confirm" | sudo crontab -
-fi
+
 
 
 
