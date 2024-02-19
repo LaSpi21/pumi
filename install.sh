@@ -1,30 +1,31 @@
 #!/bin/bash
 
+#Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-echo "$SCRIPT_DIR"
+#Indica la ruta del archivo al archivo pumi para poder llamar al programa desde línea de comando
 sudo sed -i "2i\DIR=$SCRIPT_DIR" "$SCRIPT_DIR"/pumi
-
 sudo mv $SCRIPT_DIR/pumi /usr/local/bin
 sudo chmod +x /usr/local/bin/pumi
 
 
-# Define dependencies
-dependencies=("crontab" "expect" "wakeonlan" "grub2" "ssh" "openssh-client" "ssmtp" "mpack" "iptables-persistent" "sshpass" "wget" "awk") #anymore?
+# Define dependencias
+dependencies=("crontab" "expect" "wakeonlan" "grub2" "ssh" "openssh-client" "ssmtp" "mpack" "iptables-persistent" "sshpass" "wget" "awk")
 
-# Check and install dependencies
+# Instala dependencias en caso de no estar instaladas previamente
 for dep in "${dependencies[@]}"; do
     if ! dpkg -s "$dep" &> /dev/null; then
-        echo "Installing $dep..."
+        echo "Instalando $dep..."
         sudo apt-get install -y "$dep"
     else
-        echo "$dep is already installed."
+        echo "$dep ya se encuentra instalada."
     fi
 done
 
+#Descarga clonezilla. Revisar a futuro si esta versión sigue teniendo soporte
 wget -O "$SCRIPT_DIR"/clonezilla.iso https://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/3.1.2-9/clonezilla-live-3.1.2-9-amd64.iso/download?use_mirror=sitsa
 
-#IPTABLES
+#Configura los puertos minimos para que el programa funcione dentro de la VLAN.
 sudo ufw allow ssh
 iptables -A INPUT -p tcp  --match multiport --dports 22,53,80,111,443,587,2049,8000 -j ACCEPT
 iptables -A INPUT -p udp  --match multiport --dports 7,9,53,67,68,69,111,2049,4011 -j ACCEPT
