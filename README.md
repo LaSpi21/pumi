@@ -12,18 +12,31 @@ Configurar las máquinas para que sean compatibles
 En cada nodo se debe configurar en BIOS estas opciones o equivalentes:
 
 Lan Option ROM -> enable
+
 Network Stack -> enable
+
 IPv4 PXE support -> enable
+
 IPv6 PXE support -> disable
+
 Erp Ready -> disable
+
 USB Stand by on S4/S5 -> enable
+
 UEFI -> enable
+
 Boot option #1 -> Network: UEFI
+
 Boot option #2 -> DISK: ubuntu
+
 Secure boot -> disable
+
 GO2BIOS -> enable
+
 MSI fast boot -> disable
+
 Fast boot -> disable
+
 
 
 Creación de la imagen
