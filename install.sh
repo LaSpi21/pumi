@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Archivo que se encarga de la configuración de pumi desde cero
+
 #Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
