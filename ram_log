@@ -4,7 +4,8 @@ take_sign(){
     txt_content="error"
 
     txt_content=$(sudo ssh -n "$user@$ip_address" "head -1 /proc/meminfo")
-    echo $txt_content
+    echo "$serial"
+    echo "$txt_content"
     sudo ssh -n "$user@$ip_address" "sudo shutdown now"
 }
 
