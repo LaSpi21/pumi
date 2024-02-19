@@ -32,10 +32,13 @@ iptables -A INPUT -p udp  --match multiport --dports 7,9,53,67,68,69,111,2049,40
 #sudo UFW disable
 sudo iptables-save -c > /etc/iptables/rules.v4
 
+#Crea ssh keys en caso de que no existan 
 sudo ssh-keygen -t rsa -f /root/.ssh/id_rsa -N "" <<<n
+
+#Abre la configuracion de mail y repositorio
 sudo bash $SCRIPT_DIR/configure_imaging.sh
 
-# Definir la entrada base de GRUB para clonezilla
+# Define la entrada base de GRUB para clonezilla
 entrada_grub="menuentry 'Clonezilla'{
 ISO="$SCRIPT_DIR/clonezilla.iso"
 search --set -f "\$ISO"
@@ -46,8 +49,10 @@ initrdefi (loop)/live/initrd.img
 
 echo "$entrada_grub" | sudo tee -a /etc/grub.d/40_custom > /dev/null
 
-
+#Añade la primera imagen
 sudo bash $SCRIPT_DIR/add_image.sh
+
+#Añade la informacion de los nodos para wakeonlan y comunicacion ssh
 sudo bash $SCRIPT_DIR/ssh_add.sh
 
 echo "Instalación completa, no olvides asegurarte que el tiempo limite de clonado es consecuente con las imagenes y la velocidad de red disponibles."
