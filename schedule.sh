@@ -1,17 +1,12 @@
 #!/bin/bash
 
+#Archivo para programar cambios de imagen en crontab
+
+#Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+#Indica la ruta del repositorio
 repo=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '1p')
-
-# Check if the script is run with sudo
-if [ "$EUID" -ne 0 ]; then
-    # Script is not running as root, use the current username
-    user=$(id -u -n)
-else
-    # Script is running as root (via sudo), use the original username
-    user=$SUDO_USER
-fi
-
 
 
 RED='\033[0;31m'
@@ -33,9 +28,12 @@ modo_interactivo=true
 retry=false
 onetimeonly=false
 
+#toma la uuid del repositorio y su direccion
 uuid=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p')
 device_path=$(blkid -U "$uuid" -s UUID -o device)
-# Check if the disk is already mounted
+
+
+# Se asegura que el repositorio este montado
 if ! findmnt -rno SOURCE,TARGET -S UUID="$uuid" | grep -q "^.*"; then
     # If not mounted, then attempt to mount the disk
     sudo mkdir -p "$repo" && sudo mount "$device_path" "$repo"
@@ -99,7 +97,7 @@ validar_dia_semana() {
   fi
 }
 
-# Función para validar el nombre de la imagen
+# Función para validar el nombre de la imagen, obsoleto?
 validar_nombre_imagen() {
   local nombre_imagen=$1
   local imageimg="${nombre_imagen}-img"
@@ -177,7 +175,7 @@ fi
 
 
 
-# Verificar si -i no está presente y image_name no está especificado
+# Verificar si -i no está presente e image_name no está especificado
 if [ -z "$image_name" ]; then
   echo Imagenes disponibles
   column_values=($(ls -d "$repo"*-img | xargs -I {} basename {} '-img'))
