@@ -3,5 +3,5 @@
 
 
 
-sudo bash "$DIR/imaging.sh" "$@"
+sudo bash "$DIR/pumi_menu.sh" "$@"
 
