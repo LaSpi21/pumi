@@ -1,0 +1,14 @@
+#!/bin/bash
+
+take_sign(){
+    txt_content="error"
+
+    txt_content=$(sudo ssh -n "$user@$ip_address" "head -1 /proc/meminfo")
+    echo $txt_content
+    sudo ssh -n "$user@$ip_address" "sudo shutdown now"
+}
+
+
+while IFS=, read -r mac ip_address serial user image sign; do
+    take_sign "$mac" "$ip_address" "$serial" "$user"
+done < "$log_csv"
