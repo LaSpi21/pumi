@@ -1,12 +1,15 @@
 #!/bin/bash
 
+#Menu principal de pumi
+
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 RED='\033[0;31m'
 NC='\033[0m'
 
 
-
+#Usa un menu simple utilizando opciones para ir ingresando a los sub menues
 while true; do
     clear
     echo "Pumi. Menú principal."
