@@ -1,4 +1,4 @@
-# PUMI 🚀
+# PUMI 🛠️
 
 **Programa de Imágenes de Máquinas No Atendidas**
 
@@ -84,4 +84,4 @@ Recuerda, esto programa un cambio de imagen en todas las instancias que coincida
 - Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a crear imágenes. Se están explorando soluciones automatizadas para tales escenarios.
 - El registro actualmente es conciso y requiere una mayor elaboración para obtener una retroalimentación descriptiva más completa.
 
-¡Deja que PUMI agilice tus procesos de creación de imágenes sin esfuerzo! 🛠️✨
+
