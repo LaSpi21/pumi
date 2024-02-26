@@ -1,6 +1,6 @@
-confirm=false
-read -p "Indique que acciones borrar, ingrese T para borrar TODAS las acciones, un número para borrar la acción de la línea que corresponda a>
-
+#/bin/bash
+confirm=n
+read -p "Indique que acciones borrar, ingrese T para borrar TODAS las acciones, un número para borrar la acción de la línea que corresponda a ese número o c para cancelar [t/n°/c]: " confirm_input
 
 case $confirm_input in
   [0-9]) confirm=num ;;
