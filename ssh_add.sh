@@ -1,6 +1,8 @@
 #!/bin/bash
 
+#Remueve la/s maquina/s indicada/s a la orbita de Pumi para su manejo
 
+#Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 BLUE='\033[0;34m';
@@ -41,15 +43,13 @@ while getopts ":m:i:s:u:I:p:w:f" opt; do
   esac
 done
 
-
-
-
 # Función para mostrar el uso del script
 uso() {
   echo "Uso del script: $0  -m <MAC> -i <IP> -s <Serie> -u <user> -I <Image>"
   exit 1
 }
 
+#Función para tomar los datos a partir de un archivo .csv
 batching() {
     local MAC=$1
     local IP=$2
@@ -58,13 +58,10 @@ batching() {
     local Image=$5
     local p=$6
 
+    #Agrega la información del archivo al log.csv y a new.csv, también crea ssh.csv con la información que necesita para automatizar la comunicacion mediante ssh con estas maquinas
     sudo echo  "$MAC","$IP","$Serie","$user","$Image", >> "$SCRIPT_DIR"/log/log.csv
     sudo echo  "$MAC","$IP","$Serie","$user","$Image", >> "$SCRIPT_DIR"/log/new.csv
     sudo  echo  "$MAC","$IP","$Serie","$user","$Image","$p" >> "$SCRIPT_DIR"/log/ssh.csv
-
-#    sudo sshpass -p "$p" ssh-copy-id -o StrictHostKeyChecking=no "$user"@"$IP"
-
-#    sudo expect "$SCRIPT_DIR"/ssh_add.exp "$user" "$IP"
 
 }
 
@@ -94,15 +91,10 @@ else
   validar_no_vacio "$IP"
 
 
-  # Agregar las validaciones necesarias según tus requisitos
-
-  # Añadir las variables al archivo CSV"
+  #Agrega la información del archivo al log.csv y a new.csv, también crea ssh.csv con la información que necesita para automatizar la comunicacion mediante ssh con estas maquinas
   sudo echo  "$MAC","$IP","$Serie","$user","$Image", >> "$SCRIPT_DIR"/log/log.csv
   sudo  echo  "$MAC","$IP","$Serie","$user","$Image", >> "$SCRIPT_DIR"/log/new.csv
   sudo  echo  "$MAC","$IP","$Serie","$user","$Image","$p" >> "$SCRIPT_DIR"/log/ssh.csv
-#  sudo sshpass -p "$p" ssh-copy-id -o StrictHostKeyChecking=no "$user"@"$IP"
-
-#  sudo expect "$SCRIPT_DIR"/ssh_add.exp "$user" "$IP"
 
 fi
 
