@@ -1,8 +1,11 @@
 #!/bin/bash
 
+#Remueve la maquina indicada de la orbita de Pumi
 
+#Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+#toma la dirección de los archivos .csv a utilizar
 log_csv="$SCRIPT_DIR/log/log.csv"
 recycle_csv="$SCRIPT_DIR/log/recycle.csv"
 new_csv="$SCRIPT_DIR/log/new.csv"
@@ -57,7 +60,7 @@ if [[ "$opcion" == "m" ]]; then
 	    fi
 	done
 
-
+    #Agrega la maquina de MAC indicada al reciclaje y la borra del log (y el new, de aún encontrarse en él)
     sudo awk -F, -v pattern=$MAC '$1 == pattern' OFS="," "$log_csv" >>  "$recycle_csv"
     sudo awk -F, -v pattern=$MAC '$1 != pattern' OFS="," "$log_csv" > temp.csv && sudo mv temp.csv "$log_csv"
     sudo awk -F, -v pattern=$MAC '$1 != pattern' OFS="," "$new_csv" > temp.csv && sudo mv temp.csv "$new_csv"
@@ -81,6 +84,7 @@ if [[ "$opcion" == "i" ]]; then
 
 
 
+    #Agrega la maquina de IP indicada al reciclaje y la borra del log (y el new, de aún encontrarse en él)
     sudo awk -F, -v pattern=$IP '$2 == pattern' OFS="," "$log_csv" >> "$recycle_csv"
     sudo awk -F, -v pattern=$IP '$2 != pattern' OFS="," "$log_csv" > temp.csv && sudo mv temp.csv "$log_csv"
     sudo awk -F, -v pattern=$IP '$2 != pattern' OFS="," "$new_csv" > temp.csv && sudo mv temp.csv "$new_csv"
