@@ -1,46 +1,33 @@
-# pumi
- Programed Unattended Machine Imaging
+PUMI 🚀
+Programa de Imágenes de Máquinas No Atendidas
 
+PUMI es una poderosa herramienta que integra de manera transparente Clonezilla, SSH, Wake-on-LAN, crontab y otras utilidades esenciales para facilitar operaciones programadas de imágenes completamente desatendidas dentro de una red.
 
-Este programa integra Clonezilla, ssh, wakeonlan, crontab y otras herramientas para realizar cambios de imagen programados completamente desatendidos dentro de una red.
-
-
-Para utilizar pumi se requiere configurar la red de forma que todas las maquinas se encuentren bajo una misma (idealmente dentro de una VLAN) indicar que las maquinas deben bootear por red utilizando el archivo bootx64.efi y abrir los siguientes puertos:
-TCP: 22,53,80,111,443,587,2049,8000
-UDP: 7,9,53,67,68,69,111,2049,4011
-
-Luego, en cada nodo se debe configurar en BIOS estas opciones o equivalentes:
-
-Lan Option ROM -> enable
-
-Network Stack -> enable
-
-IPv4 PXE support -> enable
-
-IPv6 PXE support -> disable
-
-Erp Ready -> disable
-
-USB Stand by on S4/S5 -> enable
-
-UEFI -> enable
-
-Boot option #1 -> Network: UEFI
-
-Boot option #2 -> DISK: ubuntu
-
-Secure boot -> disable
-
-GO2BIOS -> enable
-
-MSI fast boot -> disable
-
-Fast boot -> disable
-
-
-Creacion de imagenes
-Toda imagen debe tener habilitada la comunicación por SSH y wakeonlan
-
+Requisitos previos:
+Configurar la red para asegurar que todas las máquinas estén dentro de la misma red (preferiblemente en una VLAN).
+Configurar las máquinas para que arranquen a través de la red utilizando el archivo bootx64.efi.
+Abrir los siguientes puertos:
+TCP: 22, 53, 80, 111, 443, 587, 2049, 8000
+UDP: 7, 9, 53, 67, 68, 69, 111, 2049, 4011
+Ajustar la configuración del BIOS en cada nodo:
+Lan Option ROM: habilitar
+Network Stack: habilitar
+IPv4 PXE support: habilitar
+IPv6 PXE support: deshabilitar
+Erp Ready: deshabilitar
+USB Standby on S4/S5: habilitar
+UEFI: habilitar
+Boot option #1: Network: UEFI
+Boot option #2: DISK: ubuntu
+Secure boot: deshabilitar
+GO2BIOS: habilitar
+MSI fast boot: deshabilitar
+Fast boot: deshabilitar
+Creación de imágenes:
+Asegurar que SSH y Wake-on-LAN estén habilitados para todas las imágenes.
+Instalar los paquetes requeridos:
+bash
+Copy code
 sudo apt install ethtool
 sudo ethtool -s enp1s0 wol g
 sudo systemctl enable –now -wol
@@ -48,66 +35,52 @@ sudo systemctl edit wol.service –full –force
 sudo apt install openssh-server -y
 sudo systemctl enable ssh
 sudo ufw allow ssh
-sudo visudo -> add tareas ALL=(ALL) NOPASSWD: /sbin/shutdown # Suficiente para permitir apagar los nodos de forma no interactiva.
-
-Para crear la imagen vamos a recrear el estado de sistema que queremos clonar en una máquina (cualquier maquina con un disco de menor o, idealmente, el mismo tamaño que las maquinas destinatarias de la imagen). La imagen debe contener un archivo “Signature” en su /home/user/Desktop/ que contenga el nombre de la imagen, al seleccionar el nombre en clonezilla el mismo debe ser el contenido en Signature + “-img”
-Una vez hecho esto se bootea mediante Clonezilla (desde usb) y se sigue el siguiente instructivo, guardando la imagen del disco. 
-
-https://clonezilla.org/show-live-doc-content.php?topic=clonezilla-live/doc/01_Save_disk_image
-
-Está operación puede ser larga dependiendo de la memoria disponible en la maquina en la que se realiza.
-
-
-
-
-Dependencias que pumi instalará:
-
+sudo visudo -> agregar tareas ALL=(ALL) NOPASSWD: /sbin/shutdown # Suficiente para permitir el apagado no interactivo de los nodos.
+Crear la imagen replicando el estado del sistema deseado en una máquina (idealmente con un disco de igual o menor tamaño que las máquinas objetivo). La imagen debe contener un archivo "Signature" en su directorio /home/user/Desktop/ con el nombre de la imagen. Seleccionar el nombre de la imagen en Clonezilla como el contenido de Signature + "-img". Arrancar a través de Clonezilla (desde USB) y seguir las instrucciones proporcionadas para guardar la imagen del disco.
+Dependencias:
 Clonezilla
 crontab
-expect 
-wakeonlan 
-grub2 
-ssh 
-openssh-client 
-ssmtp 
-mpack 
-iptables-persistent 
-sshpass 
-wget 
+expect
+wakeonlan
+grub2
+ssh
+openssh-client
+ssmtp
+mpack
+iptables-persistent
+sshpass
+wget
 awk
-nmap?
+nmap (opcional)
+Uso:
+Configurar la red para PUMI.
+Configurar la configuración del BIOS en las computadoras objetivo según las instrucciones.
+Opcionalmente, configurar una cuenta de Gmail para recibir notificaciones.
+Montar el repositorio de imágenes.
+Descargar PUMI y ejecutar el script install.sh para manejar las dependencias y la configuración de red:
+bash
+Copy code
+sudo bash ./pumi/install.sh
+Seguir los pasos:
+Ingresar correo electrónico y contraseña generada para la configuración de ssmtp.
+Proporcionar una lista de MAC, IPs, nombres de usuario (en formato .csv) y contraseñas de imágenes para la automatización de la comunicación SSH.
+Especificar la dirección del repositorio de imágenes.
+Una vez instalado, para programar el primer cambio de imagen:
 
-Modo de uso:
-
-Configurar la red donde trabajará pumi.
-Configurar el BIOS en las computadoras del espacio a manejar como se indicó anteriormente.
-Si se quiere utilizar una casilla de mails para recibir notificaciones crear un gmail y/o generar una clave de aplicaciones para gmail.
-Configurar el BIOS para proporcionar energía a los periféricos USB en los estados S4/S5, y habilitar el arranque mediante UEFI en el servidor.
-Tomar MACs e IPs del espacio que se quiera manejar utilizando nmap u otra herramienta.
-$sudo nmap -sP xxx.xxx.xxx.0/xx | awk '/Nmap scan report for/{printf $5;}/MAC Address:/{print " => "$3;}' | sort
-(esto se podrá automatizar facil?)
-Montar Repositorio de imágenes: Si se quiere utilizar el propio disco, crear una partición, caso contrario conectar el disco interno/externo que se utilizará como repositorio de imágenes (será de alta lectura, baja escritura).
-Descargar pumi desde nuestro repositorio o desde nuestro pendrive. Correr el archivo install.sh, este se encargará de resolver dependencias y configuración de red: sudo bash ./pumi/install.sh luego de clonar el repositorio.
-
-El programa pedirá:
--mail y clave generadas anteriormente, configurará el servicio ssmpt.
--una lista de MACs, IPs, nombre de usuario con formato .csv y la contraseña de las imagenes para automatizar la comunicación por ssh.
--La dirección del repositorio de imágenes.
-
-Una vez instalado, para programar la primera imagen se abre el programa en terminal mediante $pumi y se selecciona la opcion 1 en el menú principal (Configurar acciones programadas) y luego nuevamente la opción 1 en el submenú (Programar un cambio de imagen).
-Recordemos que esto programará un cambio de imagen en todas las instancias donde se cumplan la combinación de nombre de día, hora, minuto, día y mes considerando los caracteres "*" como comodines.
-En caso en que las computadoras no tengan habilitado WoL en su imagen anterior es posible que se deban encender manualmente una vez clonezilla indique en pantalla que se inician los wakeonlan.
-
-
+Abrir la terminal y ejecutar $ pumi.
+Seleccionar la opción 1 en el menú principal (Configurar acciones programadas).
+Luego, seleccionar nuevamente la opción 1 en el submenú (Programar un cambio de imagen).
+Recuerda, esto programa un cambio de imagen en todas las instancias que coincidan con el día, hora, minuto, día y mes especificados, considerando "*" como comodines. Si Wake-on-LAN no está habilitado en la imagen anterior de las computadoras, es posible que deban encenderse manualmente una vez que Clonezilla indique el inicio de Wake-on-LAN.
 
 Limitaciones actuales:
+Las computadoras que intenten arrancar a través de la red dentro de la VLAN en el momento del cambio de imagen se someterán a la creación de imágenes sin validación por parte de PUMI.
+Las imágenes deben residir en el directorio raíz de la partición/disco/USB designado como repositorio de imágenes.
+Dentro de la misma "aula", todas las imágenes deben tener el mismo nombre de usuario y contraseña.
+Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a crear imágenes. Se están explorando soluciones automatizadas para tales escenarios.
+El registro actualmente es conciso y requiere una mayor elaboración para obtener una retroalimentación descriptiva más completa.
+¡Deja que PUMI agilice tus procesos de creación de imágenes sin esfuerzo! 🛠️✨
 
-Toda computadora que traté de hacer boot por red dentro de la VLAN en el momento que el cambio de imagen comience tomará imagen sin hacer checks de que esa computadora se encuentre en la orbita de pumi.
 
-Las imágenes deben estar en el root de la partición/disco/USB que se destinó como repositorio.
 
-Dentro de una misma “aula” todas las imágenes que se usen deben tener el mismo nombre de usuario y contraseña (esto es más fácil de solucionar si es necesario)
 
-Cortes de luz… si se apaga el servidor las imágenes no se harán, si se corta la luz o la red durante el cambio de imagen no se efectuará un rollback por lo que habrá que volver a cambiar la imagen, estoy viendo formas de automatizar ante estos escenarios.. (esto puede ser complicado debido a que no tengo una forma consistente de encenderlas sin BMCs ni WoL, hay que probar para saber)
 
-El log es bastante escueto aún y debería ser más descriptivo.
