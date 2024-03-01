@@ -19,10 +19,6 @@ puts $increment
 set num [lrange $argv 2 2]
 puts $num
 
-#Toma el tipo de disco a utilizar
-set disk [lrange $argv 3 3]
-puts $disk
-
 set timeout -1
 
 #Toma las Macs del archivo /pumi/log/Macs.csv que genero Restore.sh
@@ -32,7 +28,7 @@ spawn awk -f $SCRIPT_DIR/log/Macs.awk "$SCRIPT_DIR/log/Macs.csv"
 
 
 #Le pasa a clonezilla el codigo que ejecturá
-spawn ocs-live-feed-img -cbm netboot -dm auto-detect -lscm massive-deployment -mdst from-image -g auto -e1 auto -e2 -r -x -j2 -k0 -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img sda$disk
+spawn ocs-live-feed-img -cbm netboot -dm auto-detect -lscm massive-deployment -mdst from-image -g auto -e1 auto -e2 -r -x -j2 -k0 -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img sda
 
 #Automatiza las interacciones con el usuario, despierta cada maquina en Macs.csv y luego reinicia el servidor.
 expect {
