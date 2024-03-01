@@ -36,15 +36,17 @@ if [ "$#" -eq 0 ]; then
     PS3="Select a value: "
     select nombre in "${column_values[@]}"; do
         if [[ -n $nombre ]]; then
-	        echo "Seleccionaste la Imagen: $nombre"
-	        break
-	else
-	        echo "Opcion invalida."
-	    fi
-	done
+                echo "Seleccionaste la Imagen: $nombre"
+                break
+        else
+                echo "Opcion invalida."
+            fi
+        done
 else
     nombre=$1
 fi
+
+
 
 # Escapa caracteres especiales
 nombre_e=$(echo "$nombre" | sed 's/[^a-zA-Z0-9]/_/g')
@@ -55,14 +57,39 @@ if [[ ! -d "$repo$imageimg" ]]; then
     uso
 fi
 
+
+
+
+echo "Es la imagen un disco o una partición?"
+echo "1. Disco"
+echo "2. Partición"
+read opcion
+
 #Definir la entrada de GRUB
-entrada_grub="menuentry 'Restore $nombre_e'{
+
+case $opcion in
+        1) entrada_grub="menuentry 'Restore $nombre_e'{
 ISO="$SCRIPT_DIR/clonezilla.iso"
 search --set -f "\$ISO"
 loopback loop "\$ISO"
-linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/Restore.exp "$nombre_e" "$increment" "$num"\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
+linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/Restore.exp "$nombre_e" "$increment" "$num" ""\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
 initrdefi (loop)/live/initrd.img
 }"
+            ;;
+
+        2) entrada_grub="menuentry 'Restore $nombre_e'{
+ISO="$SCRIPT_DIR/clonezilla.iso"
+search --set -f "\$ISO"
+loopback loop "\$ISO"
+linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/Restore.exp "$nombre_e" "$increment" "$num" 5\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
+initrdefi (loop)/live/initrd.img
+}"
+            ;;
+        *)
+        echo "Opción no válida. Por favor, selecciona 1 ó 2."
+        exit
+            ;;
+esac
 
 
 confirm="no"
@@ -78,4 +105,3 @@ if [ "$confirm" = y ]; then
 else
 echo Cancelando..
 fi
-
