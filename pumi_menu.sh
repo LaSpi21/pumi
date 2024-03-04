@@ -8,6 +8,17 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RED='\033[0;31m'
 NC='\033[0m'
 
+IFS= read -r -s -p 'Ingrese la contraseña de Pumi: ' pw
+echo
+
+sum=$(echo -n "$pw" | md5sum | cut -d ' ' -f 1)
+
+if [ "$sum" = fd45e8fb3373e3addbf60ebdb94b6792 ]; then
+        echo ""
+else
+        echo "contraseña incorrecta, cerrando Pumi"
+        exit 1
+fi
 
 #Usa un menu simple utilizando opciones para ir ingresando a los sub menues
 while true; do
