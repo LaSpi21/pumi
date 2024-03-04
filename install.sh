@@ -3,7 +3,11 @@
 #Archivo que se encarga de la configuración de pumi desde cero
 
 #Indica la ruta del archivo para ubicar de forma relativa el resto
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+OLD_SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$(dirname "$OLD_SCRIPT_DIR")/.pumi"
+sudo mv "$OLD_SCRIPT_DIR"/  "$SCRIPT_DIR"
+
 
 #Indica la ruta del archivo al archivo pumi para poder llamar al programa desde línea de comando
 sudo sed -i "2i\DIR=$SCRIPT_DIR" "$SCRIPT_DIR"/pumi
