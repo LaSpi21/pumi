@@ -145,12 +145,19 @@ if [ "$modo_interactivo" = true ]; then
   PS3="Elegí una imagen: "
   select user_image in "${column_values[@]}"; do
       if [[ -n user_image ]]; then
-              echo "Seleccionaste la Imagen: $user_image"
+              images=($(awk -F\' '/menuentry / {print $2}' /boot/grub/grub.cfg ))
+              if [[ "${images[@]}" =~ .*Restore."$user_image".* ]]; then
+                        echo "Seleccionaste la Imagen: $user_image"
+               else
+                        echo "La imagen no se encuentran añadida, añadiendo imagen.."
+                        sudo bash "$SCRIPT_DIR"/add_image_auto.sh -i "$user_image"
+              fi
               break
       else
               echo "Opcion invalida."
           fi
       done
+
 
   read -p "¿Quieres habilitar la opción de reintentar? (s/n, por defecto: n): " retry_input
 #  read -p "¿Quieres habilitar la opción de ejecución única? (s/n, por defecto: n): " onetimeonly_input
