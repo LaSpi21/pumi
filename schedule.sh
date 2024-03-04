@@ -190,7 +190,13 @@ if [ -z "$image_name" ]; then
   PS3="Elegí una imagen: "
   select image_name in "${column_values[@]}"; do
       if [[ -n $image_name ]]; then
-              echo "Seleccionaste la Imagen: $image_name"
+              images=($(awk -F\' '/menuentry / {print $2}' /boot/grub/grub.cfg ))
+              if [[ "${images[@]}" =~ .*Restore."$image_name".* ]]; then
+                        echo "Seleccionaste la Imagen: $image_name"
+              else
+                        echo "La imagen no se encuentran añadida, añadiendo imagen.."
+                        sudo bash "$SCRIPT_DIR"/add_image_auto.sh -i "$image_name"
+              fi
               break
       else
               echo "Opcion invalida."
