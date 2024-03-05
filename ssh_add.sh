@@ -67,9 +67,9 @@ batching() {
 
 
 # Obtener entrada del usuario
-read -p "Indica si agregar en modo batch (Se requiere un archivo .csv con formato Mac,IP,Serie,user,, [si/no, default = no]" batch
+read -p "Indica si agregar en modo batch (Se requiere un archivo .csv con formato Mac,IP,Serie,user,, [y/n, default = n]" batch
 
-if [[ "$batch" == "si" ]]; then
+if [[ "$batch" == "y" ]]; then
   read -e -p "Ingresa la ruta del archivo .csv: " archivo_csv
   read -s -p "Indica la contraseña de las maquinas para automatizar la conexion por ssh: " p
   while IFS=, read -r MAC IP Serial user Image sign; do
