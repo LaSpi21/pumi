@@ -54,10 +54,7 @@ initrdefi (loop)/live/initrd.img
 }"
 
 echo "$entrada_grub" | sudo tee -a /etc/grub.d/40_custom > /dev/null
-
-#Añade la primera imagen
-sudo bash $SCRIPT_DIR/add_image.sh
-
+sudo update-grub
 #Añade la informacion de los nodos para wakeonlan y comunicacion ssh
 sudo bash $SCRIPT_DIR/ssh_add.sh
 
