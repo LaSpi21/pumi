@@ -65,8 +65,10 @@ batching() {
 
 }
 
+# Indicar si se quiere hacer un scan de la red
+read -p "Indica si se quiere hacer un scanneo de la red para obtener los datos (las computadoras deberan estar encendidas, la red debe ser cerrada) [y/n, default = n]:  " scan
 
-# Obtener entrada del usuario
+# Indicar como se ingresarán los datos
 read -p "Indica si agregar en modo batch (Se requiere un archivo .csv con formato Mac,IP,Serie,user,, [y/n, default = n]" batch
 
 if [[ "$batch" == "y" ]]; then
