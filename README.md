@@ -63,8 +63,8 @@ sudo visudo -> agregar tareas ALL=(ALL) NOPASSWD: /sbin/shutdown # Suficiente pa
 4. Montar el repositorio de imágenes.
 5. Descargar PUMI y ejecutar el script install.sh para manejar las dependencias y la configuración de red:
 
-sudo bash ./pumi/install.sh
 
+sudo bash ~/pumi/install.sh
 6. Seguir los pasos:
 - Ingresar correo electrónico y contraseña generada para la configuración de ssmtp.
 - Proporcionar una lista de MAC, IPs, nombres de usuario (en formato .csv) y contraseñas de imágenes para la automatización de la comunicación SSH.
