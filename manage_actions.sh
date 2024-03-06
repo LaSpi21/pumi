@@ -61,7 +61,7 @@ while true; do
            break
            ;;
         *)
-            echo "Opción no válida. Por favor, selecciona 1, 2, 3 ó 4."
+            echo "Opción no válida. Por favor, selecciona un número del 1 al 6."
             ;;
     esac
 done    
