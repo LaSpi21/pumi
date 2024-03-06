@@ -86,8 +86,10 @@ sudo truncate -s 0 "$new_csv"
 
 #toma las firmas de los nodos
 while IFS=, read -r mac ip_address serial user image sign; do
-    take_sign "$mac" "$ip_address" "$serial" "$user"
+    take_sign "$mac" "$ip_address" "$serial" "$user" &
 done < "$log_csv"
+
+wait
 
 #borra todo las fallas obtenidas en el ultimo ciclo
 sudo truncate -s 0 "$fail_csv"
