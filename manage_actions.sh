@@ -55,7 +55,7 @@ while true; do
             sudo bash "$SCRIPT_DIR"/change_timeout.sh
             ;;
         5)
-            sudo bash "$SCRIPT_DIR"/shutdown.sh
+            sudo bash "$SCRIPT_DIR"/Shutdown_schedule.sh
             ;;            
         6)
            break
