@@ -17,7 +17,7 @@ validar_hora() {
 read -p "Ingresa la hora a la cual apagar (0-23): " user_hour
 [[ -n "$user_hour" ]] && { validar_hora "$user_hour"; hour="$user_hour"; }
 
-cron_line="0 $hour * * * bash $SCRIPT_DIR/shutdown.sh"
+cron_line="0 $hour * * * bash $SCRIPT_DIR/Shutdown.sh"
 
 temp_file=$(mktemp)
 
