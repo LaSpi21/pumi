@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Archivo para programar cambios de imagen en crontab
+#Archivo para establecer una hora de apagado para todas las computadoras.
 
 #Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
