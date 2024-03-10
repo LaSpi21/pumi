@@ -29,12 +29,13 @@ while true; do
     clear
     echo "Pumi. Configurar acciones programadas."
     echo "Selecciona una acción:"
-    echo "1. Programar un cambio de imagen"
-    echo "2. Ver las acciones programadas"
-    echo "3. Borrar acciones programadas"
-    echo "4. Cambiar el tiempo limite para el cambio de imagen"
-    echo "5. Programar una hora de apagado general"
-    echo "6. Volver al menú principal"
+    echo "1. Realizar un cambio de imagen"
+    echo "2. Programar un cambio de imagen"
+    echo "3. Ver las acciones programadas"
+    echo "4. Borrar acciones programadas"
+    echo "5. Cambiar el tiempo limite para el cambio de imagen"
+    echo "6. Programar una hora de apagado general"
+    echo "7. Volver al menú principal"
 
     read opcion
     
@@ -42,26 +43,31 @@ while true; do
 
         1)
             echo "Programando una nueva acción"
-            sudo bash "$SCRIPT_DIR"/schedule.sh
+            sudo bash "$SCRIPT_DIR"/change_image.sh
             ;;
 
         2)
+            echo "Programando una nueva acción"
+            sudo bash "$SCRIPT_DIR"/schedule.sh
+            ;;
+
+        3)
             sudo bash "$SCRIPT_DIR"/view_crontab.sh
             ;;
-        3)
+        4)
             sudo bash "$SCRIPT_DIR"/erase_crontab.sh
             ;;
-        4)
+        5)
             sudo bash "$SCRIPT_DIR"/change_timeout.sh
             ;;
-        5)
+        6)
             sudo bash "$SCRIPT_DIR"/Shutdown_schedule.sh
             ;;            
-        6)
+        7)
            break
            ;;
         *)
-            echo "Opción no válida. Por favor, selecciona un número del 1 al 6."
+            echo "Opción no válida. Por favor, selecciona un número del 1 al 7."
             ;;
     esac
 done    
