@@ -32,8 +32,9 @@ while true; do
     echo "1. Agregar maquina/s"
     echo "2. Quitar maquina"
     echo "3. Recuperar maquina"
-    echo "4. Correr un script en las maquínas"
-    echo "5. Volver al menú principal"
+    echo "4. Correr un script en las máquinas"
+    echo "5. Realizar un registro de las máquinas"
+    echo "6. Volver al menú principal"
     
     read opcion
     
@@ -53,11 +54,14 @@ while true; do
         4)
             sudo bash "$SCRIPT_DIR"/run_script.sh
             ;;
-        5)
+        4)
+            sudo bash "$SCRIPT_DIR"/log.sh
+            ;;
+        6)
            break
            ;;
         *)
-            echo "Opción no válida. Por favor, selecciona 1, 2, 3, 4 ó 5."
+            echo "Opción no válida. Por favor, selecciona un número del 1 al 6."
             ;;
     esac
 done    
