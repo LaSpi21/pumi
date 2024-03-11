@@ -56,5 +56,4 @@ select image_name in "${column_values[@]}"; do
 
 
 
-sudo bash $SCRIPT_DIR/Restore.sh -i $image_name"
-
+sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name"
