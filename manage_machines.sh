@@ -54,7 +54,7 @@ while true; do
         4)
             sudo bash "$SCRIPT_DIR"/run_script.sh
             ;;
-        4)
+        5)
             sudo bash "$SCRIPT_DIR"/log.sh
             ;;
         6)
