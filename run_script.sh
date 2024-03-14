@@ -39,7 +39,14 @@ wake() {
 
 #funcion que se comunica y extrae la firma de los nodos (se puede trabajar para que extraiga mas información).
 run_script(){
-  sudo ssh -n "$user@$ip_address"  'bash -s' < "$Run"
+    local MAC=$1
+    local IP=$2
+    local Serie=$3
+    local user=$4
+    local Image=$5
+    local p=$6
+    
+    sudo sshpass -p "$p" sudo ssh -n "$user@$ip_address"  'bash -s' < "$Run"
 }
 
 #despierta los nodos
@@ -63,3 +70,5 @@ while IFS=, read -r mac ip_address serial user image sign; do
 done < "$log_csv"
 
 wait
+
+echo "Scripts corridos"
