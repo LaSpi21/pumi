@@ -60,6 +60,11 @@ wake() {
 
 #funcion que se comunica y extrae la firma de los nodos (se puede trabajar para que extraiga mas información).
 take_sign(){
+    local mac=$1
+    local ip_address=$2
+    local serial=$3
+    local user=$4
+    
     txt_content="error"
 
     txt_content=$(sudo ssh -n "$user@$ip_address" "cat ./Desktop/Signature")
@@ -111,7 +116,7 @@ fi
 if [ "$retry" = true ]; then
     if [ -n "$(head -n 1 $fail_csv)" ]; then
  	sudo bash "$SCRIPT_DIR"/schedule.sh -d "$day" -M "$month" -u -f -i "$global_image";
-fi
+  fi
 fi
 
 #Agrega la informacion de este ciclo al historico junto con la fecha
