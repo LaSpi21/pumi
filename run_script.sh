@@ -66,8 +66,8 @@ wait
 
 #corre el script indicado
 while IFS=, read -r mac ip_address serial user image sign; do
-    run_script "$mac" "$ip_address" "$serial" "$user" &
-done < "$log_csv"
+   adding_ssh "$MAC" "$IP" "$Serial" "$user" "$Image" "$p" &
+done < "$ssh_csv"
 
 wait
 
