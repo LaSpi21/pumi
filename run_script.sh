@@ -7,9 +7,12 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 log_csv="$SCRIPT_DIR/log/log.csv"
 ssh_csv="$SCRIPT_DIR/log/ssh.csv"
 
-Run=""
+file=""
 
-read -e -p "Ingresa la ruta del script a implementar: " Run
+read -e -p "Ingresa la ruta del script a implementar: " file
+
+run=$(cat "$file")
+
 
 #funcion que se encarga de automatizar la comunicacion con los nodos
 adding_ssh() {
@@ -46,7 +49,7 @@ run_script(){
     local Image=$5
     local p=$6
     
-    sudo sshpass -p "$p" sudo ssh -n "$user@$ip_address"  'bash -s' < "$Run"
+    sudo sshpass -p "$p" sudo ssh -n "$user@$ip_address" $run
 }
 
 #despierta los nodos
@@ -58,7 +61,7 @@ wait
 
 #automatiza la conexion ssh
 while IFS=, read -r MAC IP Serial user Image p; do
-   adding_ssh "$MAC" "$IP" "$Serial" "$user" "$Image" "$p" &
+   run_script "$MAC" "$IP" "$Serial" "$user" "$Image" "$p" &
 done < "$ssh_csv"
 
 wait
