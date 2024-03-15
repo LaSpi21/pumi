@@ -36,13 +36,16 @@ if [[ "$power_type" == "e" ]]; then
 	while IFS=, read -r mac ip_address serial user image sign; do
 	    wake "$mac" "$ip_address" "$serial" "$user" &
 	done < "$log_csv"
+wait
 elif [[ "$power_type" == "a" ]]; then
         while IFS=, read -r mac ip_address serial user image sign; do
             shutdown "$mac" "$ip_address" "$serial" "$user" &
         done < "$log_csv"
-
+wait
 
 fi
+
+
 
 #como esta accion esta fuera de todo submenú, se añade este separador
 echo "Presione cualquier tecla para continuar"
