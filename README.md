@@ -4,6 +4,10 @@
 
 PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake-on-LAN, crontab y otras utilidades esenciales para facilitar operaciones programadas de imágenes completamente desatendidas dentro de una red.
 
+
+### Funciones:
+
+
 ### Requisitos previos:
 - Configurar la red para asegurar que todas las máquinas estén dentro de la misma red (preferiblemente en una VLAN).
 - Configurar las máquinas para que arranquen a través de la red utilizando el archivo bootx64.efi.
@@ -81,7 +85,8 @@ Recuerda, esto programa un cambio de imagen en todas las instancias que coincida
 - Las computadoras que intenten arrancar a través de la red dentro de la VLAN en el momento del cambio de imagen se someterán a la creación de imágenes sin validación por parte de PUMI.
 - Las imágenes deben residir en el directorio raíz de la partición/disco/USB designado como repositorio de imágenes.
 - Dentro de la misma "aula", todas las imágenes deben tener el mismo nombre de usuario y contraseña.
-- Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a crear imágenes. Se están explorando soluciones automatizadas para tales escenarios.
-- El registro actualmente es conciso y requiere una mayor elaboración para obtener una retroalimentación descriptiva más completa.
+- Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a desplegar imágenes. Se están explorando soluciones automatizadas para tales escenarios.
+- El registro actualmente no contiene detalles más allá del nombre de la imagen y requiere una mayor elaboración para obtener una descripción más completa.
+- En esta versión aún no se ha automatizada la toma de imagenes.
 
 
