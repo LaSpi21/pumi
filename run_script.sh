@@ -52,12 +52,17 @@ run_script(){
     sudo sshpass -p "$p" sudo ssh -n "$user@$ip_address" $run
 }
 
-#despierta los nodos
-while IFS=, read -r mac ip_address serial user image sign; do
-    wake "$mac" "$ip_address" "$serial" "$user" &
-done < "$log_csv"
+# Pregunta al usuario si necesita encender las computadoras
+read -p "Se necesita encender las computadoras? (y/n): " response
 
-wait
+# Despierta los nodos solo si la respuesta es 'y'
+if [ "$response" = "y" ]; then
+    while IFS=, read -r mac ip_address serial user image sign; do
+        wake "$mac" "$ip_address" "$serial" "$user" &
+    done < "$log_csv"
+
+    wait
+fi
 
 #automatiza la conexion ssh
 while IFS=, read -r MAC IP Serial user Image p; do
