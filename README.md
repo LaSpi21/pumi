@@ -1,4 +1,4 @@
-# PUMI 🛠️
+# PUMI 🛠🐶
 
 **Programed Unattended Machine Imaging**
 
@@ -6,6 +6,12 @@ PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake
 
 
 ### Funciones:
+Configuración inicial y generación de imagenes de sistema automatizadas.
+Automatización de cambios de imagen por red.
+Programado de cambios de imagén.
+Programado de horario de apagado de las computadoras en red. Prendido y apagado general.
+Registro (Simple) de las computadoras en red.
+Enviar y correr scripts en las maquínas en red.
 
 
 ### Requisitos previos:
@@ -31,7 +37,7 @@ PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake
 
 ### Creación de imágenes:
 - Asegurar que SSH y Wake-on-LAN estén habilitados para todas las imágenes.
-Descargar los archivos del repositorio pumi_node y ejecutar Node_configuration.sh
+Descargar los archivos del repositorio pumi_node y ejecutar Node_configuration.sh (https://github.com/LaSpi21/pumi_node).
 Recomendado: Configurar usuarios admin y no-admin.
 
 
@@ -62,7 +68,6 @@ Correr SaveImage, seguir los pasos indicados.
 4. Montar el repositorio de imágenes.
 5. Descargar PUMI y ejecutar el script install.sh para manejar las dependencias y la configuración de red:
 
-
 sudo bash ~/pumi/install.sh
 6. Seguir los pasos:
 - Ingresar correo electrónico y contraseña generada para la configuración de ssmtp.
@@ -74,12 +79,11 @@ Una vez instalado, para programar el primer cambio de imagen:
 - Seleccionar la opción 1 en el menú principal (Configurar acciones programadas).
 - Luego, seleccionar nuevamente la opción 1 en el submenú (Programar un cambio de imagen).
 
-Recuerda, esto programa un cambio de imagen en todas las instancias que coincidan con el día, hora, minuto, día y mes especificados, considerando "*" como comodines. Si Wake-on-LAN no está habilitado en la imagen anterior de las computadoras, es posible que deban encenderse manualmente una vez que Clonezilla indique el inicio de Wake-on-LAN.
+Recuerde, esto programa un cambio de imagen en todas las instancias que coincidan con el día, hora, minuto, día y mes especificados, considerando "*" como comodines. Si Wake-on-LAN no está habilitado en la imagen anterior de las computadoras, es posible que deban encenderse manualmente una vez que Clonezilla indique el inicio de Wake-on-LAN.
 
 ### Limitaciones actuales:
 - Las computadoras que intenten arrancar a través de la red dentro de la VLAN en el momento del cambio de imagen se someterán a la creación de imágenes sin validación por parte de PUMI.
 - Las imágenes deben residir en el directorio raíz de la partición/disco/USB designado como repositorio de imágenes.
-- Dentro de la misma "aula", todas las imágenes deben tener el mismo nombre de usuario y contraseña.
 - Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a desplegar imágenes. Se están explorando soluciones automatizadas para tales escenarios.
 - El registro actualmente no contiene detalles más allá del nombre de la imagen y requiere una mayor elaboración para obtener una descripción más completa.
 
