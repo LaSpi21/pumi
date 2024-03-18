@@ -1,5 +1,5 @@
 #!bin/bash
-
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 read -e -p "Ingresa la ruta al repositorio (ej. /media/user/repo/)" repo_path
 
 #Completa el archivo /pumi/Repo_path con las rutas e uuids del repositorio y de la carpeta /pumi/
