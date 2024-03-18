@@ -31,18 +31,10 @@ PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake
 
 ### Creación de imágenes:
 - Asegurar que SSH y Wake-on-LAN estén habilitados para todas las imágenes.
-- Instalar los paquetes requeridos:
+Descargar los archivos de Files_for_node y Ejecutar Node_configuration.sh
+Recomendado: Configurar usuarios admin y no-admin
 
-sudo apt install ethtool
-sudo ethtool -s enp1s0 wol g
-sudo systemctl enable –now -wol
-sudo systemctl edit wol.service –full –force
-sudo apt install openssh-server -y
-sudo systemctl enable ssh
-sudo ufw allow ssh
-sudo visudo -> agregar tareas ALL=(ALL) NOPASSWD: /sbin/shutdown # Suficiente para permitir el apagado no interactivo de los nodos.
-
-- Crear la imagen replicando el estado del sistema deseado en una máquina (idealmente con un disco de igual o menor tamaño que las máquinas objetivo). La imagen debe contener un archivo "Signature" en su directorio /home/user/Desktop/ con el nombre de la imagen. Seleccionar el nombre de la imagen en Clonezilla como el contenido de Signature + "-img". Arrancar a través de Clonezilla (desde USB) y seguir las instrucciones proporcionadas para guardar la imagen del disco.
+- Crear la imagen replicando el estado del sistema deseado en una máquina (idealmente con un disco de igual o menor tamaño que las máquinas objetivo). La imagen debe contener un archivo ".Signature" en su directorio /home/user/Desktop/ con el nombre de la imagen. Seleccionar el nombre de la imagen en Clonezilla como el contenido de Signature + "-img". Arrancar a través de Clonezilla (desde USB) y seguir las instrucciones proporcionadas para guardar la imagen del disco.
 
 ### Dependencias:
 - Clonezilla
@@ -87,6 +79,6 @@ Recuerda, esto programa un cambio de imagen en todas las instancias que coincida
 - Dentro de la misma "aula", todas las imágenes deben tener el mismo nombre de usuario y contraseña.
 - Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a desplegar imágenes. Se están explorando soluciones automatizadas para tales escenarios.
 - El registro actualmente no contiene detalles más allá del nombre de la imagen y requiere una mayor elaboración para obtener una descripción más completa.
-- En esta versión aún no se ha automatizada la toma de imagenes.
+
 
 
