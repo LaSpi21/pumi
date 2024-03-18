@@ -1,0 +1,6 @@
+#!/bin/bash
+#Mover este archivo a /usr/local/bin especificar la ruta al archivo SaveImage.sh
+
+DIR=""
+
+sudo bash "$DIR/SaveImage.sh" "$@"
