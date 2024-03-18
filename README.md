@@ -2,7 +2,7 @@
 
 **Programed Unattended Machine Imaging**
 
-PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake-on-LAN, crontab y otras utilidades esenciales para facilitar operaciones programadas de imágenes completamente desatendidas dentro de una red.
+PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake-on-LAN, crontab y otras utilidades para facilitar el programado de despliegue de imágenes completamente desatendido dentro de una red.
 
 
 ### Funciones:
