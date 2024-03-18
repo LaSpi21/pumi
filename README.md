@@ -6,12 +6,13 @@ PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake
 
 
 ### Funciones:
-Configuración inicial y generación de imagenes de sistema automatizadas.
-Automatización de cambios de imagen por red.
-Programado de cambios de imagén.
-Programado de horario de apagado de las computadoras en red. Prendido y apagado general.
-Registro (Simple) de las computadoras en red.
-Enviar y correr scripts en las maquínas en red.
+- Configuración inicial y generación de imágenes de sistema automatizadas.
+- Automatización de cambios de imagen por red.
+- Programación de cambios de imagen.
+- Programación de horario de apagado de las computadoras en red.
+- Prendido y apagado general.
+- Registro (Simple) de las computadoras en red.
+- Enviar y ejecutar scripts en las máquinas en red.
 
 
 ### Requisitos previos:
