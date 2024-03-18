@@ -9,6 +9,9 @@ ssh_csv="$SCRIPT_DIR/log/ssh.csv"
 
 file=""
 
+echo "Recuerde que el usuario en el que se correra su script puede no ser administrado, ajuste su codigo para tal situación"
+echo "Por ejemplo, considere utilizar 'python3.11 -m pip install --user pygame' en lugar de 'python3.11 -m pip install  pygame'".
+
 read -e -p "Ingresa la ruta del script a implementar: " file
 
 run=$(cat "$file")
