@@ -31,10 +31,13 @@ PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake
 
 ### Creación de imágenes:
 - Asegurar que SSH y Wake-on-LAN estén habilitados para todas las imágenes.
-Descargar los archivos de Files_for_node y Ejecutar Node_configuration.sh
-Recomendado: Configurar usuarios admin y no-admin
+Descargar los archivos del repositorio pumi_node y ejecutar Node_configuration.sh
+Recomendado: Configurar usuarios admin y no-admin.
 
-- Crear la imagen replicando el estado del sistema deseado en una máquina (idealmente con un disco de igual o menor tamaño que las máquinas objetivo). La imagen debe contener un archivo ".Signature" en su directorio /home/user/Desktop/ con el nombre de la imagen. Seleccionar el nombre de la imagen en Clonezilla como el contenido de Signature + "-img". Arrancar a través de Clonezilla (desde USB) y seguir las instrucciones proporcionadas para guardar la imagen del disco.
+
+- Crear la imagen replicando el estado del sistema deseado en una máquina (idealmente con un disco de igual o menor tamaño que las máquinas objetivo).
+
+Correr SaveImage, seguir los pasos indicados.
 
 ### Dependencias:
 - Clonezilla
