@@ -53,7 +53,6 @@ wake() {
     local user=$4
 
     wakeonlan "$mac"
-    sleep 1
 }
 
 #funcion que se comunica y extrae la firma de los nodos (se puede trabajar para que extraiga mas información).
@@ -73,7 +72,7 @@ take_sign(){
 
 #despierta los nodos
 while IFS=, read -r mac ip_address serial user image sign; do
-    wake "$mac" "$ip_address" "$serial" "$user"
+    wake "$mac" "$ip_address" "$serial" "$user" &
 done < "$log_csv"
 
 sleep 150
