@@ -105,6 +105,10 @@ sudo awk -F ',' '{print $1 "," $2}' "$log_csv" | sudo tee "$macs_csv" > /dev/nul
 
 fi
 
+mail=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '4p')
+mpack -s "Realizando un cambio de imagen a $image_name" "$SCRIPT_DIR"/log/log.csv "$mail" 
+
+
 #Indica la entrada de grub a utilizar y reinicia 
 source /home/"$user_script"/.bashrc
 sudo /usr/sbin/grub-reboot "Restore $image_name"
