@@ -19,8 +19,7 @@ root=admin@pumi.com
 mailhub=smtp.gmail.com:587
 AuthUser="$mail"
 AuthPass="$pass""
-#AuthUser=ulab309@gmail.com
-#AuthPass=gmegydkshtjjtjry"
+
 
 echo "$conf" | sudo tee -a /etc/ssmtp/ssmtp.conf > /dev/null
 
@@ -48,7 +47,7 @@ echo "$ID_pumi" | sudo tee -a "$repo_path_file" > /dev/null
 
 echo "$mail" | sudo tee -a "$repo_path_file" > /dev/null
 
-#Agrega un tiempo limite por defecto de 45 minutos para finalizar el cambio de imagen.
-echo "45" | sudo tee -a "$repo_path_file" > /dev/null
+#Agrega un tiempo limite por defecto de 100 minutos para finalizar el cambio de imagen.
+echo "100" | sudo tee -a "$repo_path_file" > /dev/null
 
-echo "pumi configurado, el tiempo maximo por defecto para clonar imagenes es 45 minutos, puede cambiarlo desde pumi>Configurar acciones programadas"
+echo "pumi configurado, el tiempo maximo por defecto para clonar imagenes es 100 minutos, puede cambiarlo desde pumi>Configurar acciones programadas"
