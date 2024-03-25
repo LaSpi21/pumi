@@ -29,14 +29,10 @@ spawn awk -f $SCRIPT_DIR/log/Macs.awk "$SCRIPT_DIR/log/Macs.csv"
 
 
 #Le pasa a clonezilla el codigo que ejecturá
-spawn ocs-live-feed-img -cbm netboot -dm auto-detect -lscm massive-deployment -mdst from-image -e1 auto -e2 -t -r -x -k -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img sda2
+spawn ocs-live-feed-img -cbm netboot -dm start-new-dhcpd -lscm massive-deployment -mdst from-image -e1 auto -e2 -t -r -x -k -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img sda2
 
 #Automatiza las interacciones con el usuario, despierta cada maquina en Macs.csv y luego reinicia el servidor.
 expect {
-    {//NOTE// If you choose "yes", you have to make sure your DHCP server provides enough number of IP address for all the clients. Besides, this mechanism is risky because all the PXE or uEFI network booting clients will enter DRBL or Clonezilla mode. Please make sure this is what you want.} {
-        send "Y\r"
-        exp_continue
-    }
     {Do all clients finish restoring jobs? //NOTE// DO NOT ANSWER "y" IF ALL CLIENTS HAVE _NOT_ FINISHED JOBS. It might terminate the required services for restoring.}
    {foreach element $mac_address {
         spawn wakeonlan $element
