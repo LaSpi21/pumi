@@ -114,7 +114,6 @@ mpack -s "Realizando un cambio de imagen a $image_name" "$SCRIPT_DIR"/log/log.cs
 
 
 #Indica la entrada de grub a utilizar y reinicia 
-source /home/"$user_script"/.bashrc
 sudo /usr/sbin/grub-reboot "Restore $image_name"
 sleep 2
 /sbin/reboot
