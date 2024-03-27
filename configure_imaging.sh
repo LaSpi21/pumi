@@ -47,6 +47,11 @@ echo "$ID_pumi" | sudo tee -a "$repo_path_file" > /dev/null
 
 echo "$mail" | sudo tee -a "$repo_path_file" > /dev/null
 
+#Agrega la contraseña de pumi
+read -s -p "Indica la contraseña de Pumi: " p
+hash=$(echo -n "$pw" | md5sum | cut -d ' ' -f 1)
+echo "$hash" | sudo tee "$repo_path_file" > /dev/null
+
 #Agrega un tiempo limite por defecto de 100 minutos para finalizar el cambio de imagen.
 echo "100" | sudo tee -a "$repo_path_file" > /dev/null
 
