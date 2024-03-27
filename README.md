@@ -76,8 +76,29 @@ sudo bash ~/pumi/install.sh
 - Especificar la dirección del repositorio de imágenes.
 - Especificar una contraseña para Pumi
 
-Una vez instalado, para programar el primer cambio de imagen:
-- Abrir la terminal y ejecutar `$ pumi`.
+Una vez instalado, para inicar pumi:
+- Abrir una terminal y ejecutar `$ pumi`.
+
+
+### Usos:
+
+El menú principal cuenta con 4 apartados:
+
+- 1 Configuración de acciones programadas
+  2 Configurar imágenes
+  3 Configurar máquinas
+  4 Encender o Apagar máquinas
+
+## Configuración de acciones programadas:
+
+- Aquí encontraremos opciones para realizar los cambios de imagen:
+- 1->1 Realizar un cambio de imagén:
+
+  
+
+
+
+
 - Seleccionar la opción 1 en el menú principal (Configurar acciones programadas).
 - Luego, seleccionar nuevamente la opción 1 en el submenú (Programar un cambio de imagen).
 
