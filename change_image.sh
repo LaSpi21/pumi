@@ -60,7 +60,7 @@ case $manual in
     [yY]) manual=true ;;
   esac
 
-elif [ "$manual" = true ]; then
+if [ "$manual" = true ]; then
         sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name" -m
 else
         sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name"
