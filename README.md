@@ -89,7 +89,7 @@ El menú principal cuenta con 4 apartados:
   3 Configurar máquinas
   4 Encender o Apagar máquinas
 
-## 1 Configuración de acciones programadas:
+#### 1 Configuración de acciones programadas:
 
 - Aquí encontraremos opciones para realizar los cambios de imagen:
 - 1-> 1 Realizar un cambio de imagén: Se le pedirá que seleccione una imagen a desplegar, si la misma no se encuentra agregada además se pedirá que indique si se trata de una partición o un disco. Esta acción puede realizarse de forma automatizada en todas las máquinas o encendiendo de forma manual las que se requieran modificar, esto es útil cuando solo algunas máquinas requieren cambios, se le preguntará cual de las dos opciones se prefiere. Luego el servidor se reiniciará para bootear Clonezilla, de aquí en más el proceso es automático, el servidor se reiniciará sólo luego de que pase el tiempo estipulado.
@@ -99,13 +99,13 @@ El menú principal cuenta con 4 apartados:
 - 1 -> 5 Cambiar el tiempo límite para el cambio de imagen: Modifica el tiempo que espera Clonezilla para reiniciar el servidor durante un cambio de imagen.
 - 1 -> 6 Programar una hora de apagado general: Si se configura Pumi apagará todas las computadoras que maneja automaticamente todos los dias a la hora indicada.
 
-## 2 Configurar imágenes:
+#### 2 Configurar imágenes:
 
 - Aquí encontraremos opciones relacionadas a las imagenes y su repositorio:
 - 2 -> 1 Agregar imagen: Permite agregar una imagen para utilizar en el despliegue mediante Pumi, se preguntará si la misma es un disco completo o una partición.
 - 2 -> 2 Cambiar dirección del repositorio de imágenes: Permite indicar una nueva ruta para que Pumi busque sus imagenes, esto además puede modificar el UUID del repositorio a fines de que clonezilla haga el montado correspondiente durante el despliegue.
 
-## 3 Configurar máquinas:
+#### 3 Configurar máquinas:
 
 - Aquí podremos modificar las máquinas que Pumi tiene en su orbita:
 - 3 -> 1 Agregar máquinas: Permite agregar una máquina ingresando sus datos o varias indicando un archivo con formato adecuado que contenga esta información (.csv con formato Mac,IP,Serie,user,,).
@@ -114,7 +114,7 @@ El menú principal cuenta con 4 apartados:
 - 3 -> 4 Correr un script en las máquinas: permite enviar y ejecutar scriptsde shell en las máquinas bajo el dominio de Pumi.
 - 3 -> 5 Realizar un registro de las máquinas: Permite hacer un registro manual simple de las máquinas, este tipo de registros se hace automáticamente luego de cada cambio de imagen.
 
-## 4 Apagar o encender máquinas:
+#### 4 Apagar o encender máquinas:
 - 4 Simplemente permite encender o apagar todas las maquinas en el dominio de Pumi.
 
   
