@@ -13,7 +13,9 @@ echo
 
 sum=$(echo -n "$pw" | md5sum | cut -d ' ' -f 1)
 
-if [ "$sum" = fd45e8fb3373e3addbf60ebdb94b6792 ]; then
+hash=$($(cat "$SCRIPT_DIR/Repo_path"| sed -n '6p'))
+#fd45e8fb3373e3addbf60ebdb94b6792
+if [ "$sum" = "$hash" ]; then
         echo ""
 else
         echo "contraseña incorrecta, cerrando Pumi"
