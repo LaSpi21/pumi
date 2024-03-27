@@ -62,7 +62,7 @@ Correr SaveImage, seguir los pasos indicados.
 - awk
 - nmap (opcional)
 
-### Uso:
+### Instalación:
 1. Configurar la red para PUMI.
 2. Configurar la configuración del BIOS en las computadoras objetivo según las instrucciones.
 3. Opcionalmente, configurar una cuenta de Gmail para recibir notificaciones.
