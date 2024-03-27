@@ -74,6 +74,7 @@ sudo bash ~/pumi/install.sh
 - Ingresar correo electrónico y contraseña generada para la configuración de ssmtp.
 - Proporcionar una lista de MAC, IPs, nombres de usuario (en formato .csv) y contraseñas de imágenes para la automatización de la comunicación SSH.
 - Especificar la dirección del repositorio de imágenes.
+- Especificar una contraseña para Pumi
 
 Una vez instalado, para programar el primer cambio de imagen:
 - Abrir la terminal y ejecutar `$ pumi`.
