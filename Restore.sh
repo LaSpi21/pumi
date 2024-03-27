@@ -22,7 +22,7 @@ fail_csv="$SCRIPT_DIR/log/failed.csv"
 failed=false
 new=false
 retry=false
-onetimeonly=false
+manual=false
 
 #placeholder para el nombre de la imagen
 image_name=""
@@ -34,7 +34,7 @@ log_day=$(date -d  "+$increment minutes" "+%d")
 log_month=$(date -d  "+$increment minutes" "+%m")
 
 
-while getopts ":i:fnro" opt; do
+while getopts ":i:fnrm" opt; do
   case ${opt} in
     i )
       image_name="$OPTARG"
@@ -48,8 +48,8 @@ while getopts ":i:fnro" opt; do
     r)
       retry=true
       ;;
-    o)
-      onetimeonly=true
+    m)
+      manual=true
       ;;
     \? )
       echo "Usage: $ [-i <image_name>] [-f] [-n] [-r] [-o] "
@@ -84,7 +84,7 @@ rm "$temp_file"
 
 echo Se agregó "$cron_line"
 
-
+sudo echo "" | sudo tee "$macs_csv" > /dev/null
 
 #Cambia la imagen que figura para cada maquina en log.csv y borra las firmas
 while IFS=, read -r mac ip_address serial user image sign; do
@@ -97,6 +97,10 @@ if [ "$failed" = true ]; then
 
 elif [ "$new" = true ]; then
  sudo awk -F ',' '{print $1 "," $2}' "$new_csv" | sudo tee "$macs_csv" > /dev/null
+#sudo truncate -s 0 "$new_csv"
+
+elif [ "$manual" = true ]; then
+ sudo echo "" | sudo tee "$macs_csv" > /dev/null
 #sudo truncate -s 0 "$new_csv"
 
 else
