@@ -54,6 +54,16 @@ select image_name in "${column_values[@]}"; do
         fi
     done
 
+read -p "Deseas encender las máquinas de forma manual? [y/n, default: n, las máquinas se encenderan automáticamente] " manual
+
+case $manual in
+    [yY]) manual=true ;;
+  esac
+
+elif [ "$manual" = true ]; then
+        sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name" -m
+else
+        sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name"
+fi
 
 
-sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name"
