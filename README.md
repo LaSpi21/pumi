@@ -125,8 +125,6 @@ El menú principal cuenta con 4 apartados:
 - Seleccionar la opción 1 en el menú principal (Configurar acciones programadas).
 - Luego, seleccionar nuevamente la opción 1 en el submenú (Programar un cambio de imagen).
 
-Recuerde, esto programa un cambio de imagen en todas las instancias que coincidan con el día, hora, minuto, día y mes especificados, considerando "*" como comodines. Si Wake-on-LAN no está habilitado en la imagen anterior de las computadoras, es posible que deban encenderse manualmente una vez que Clonezilla indique el inicio de Wake-on-LAN.
-
 ### Limitaciones actuales:
 - Las computadoras que intenten arrancar a través de la red dentro de la VLAN en el momento del cambio de imagen se someterán a la creación de imágenes sin validación por parte de PUMI.
 - Las imágenes deben residir en el directorio raíz de la partición/disco/USB designado como repositorio de imágenes.
