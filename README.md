@@ -4,7 +4,6 @@
 
 PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake-on-LAN, crontab y otras utilidades para facilitar el programado de despliegue de imágenes completamente desatendido dentro de una red.
 
-
 ### Funciones:
 - Configuración inicial y generación de imágenes de sistema automatizadas.
 - Automatización de cambios de imagen por red.
@@ -28,6 +27,7 @@ PUMI es una herramienta que integra de manera transparente Clonezilla, SSH, Wake
 - sshpass
 - wget
 - awk
+- jq
 - nmap (opcional)
 
 ### Instalación:
@@ -99,7 +99,7 @@ El menú principal cuenta con 4 apartados:
 - 1 -> 3 Ver las acciones programadas: Imprime en pantalla las acciones programadas en formato crontab.
 - 1 -> 4 Borrar acciones programadas: Permite borrar una o todas las acciones programadas vistas en el punto anterior.
 - 1 -> 5 Cambiar el tiempo límite para el cambio de imagen: Modifica el tiempo que espera Clonezilla para reiniciar el servidor durante un cambio de imagen.
-- 1 -> 6 Programar una hora de apagado general: Si se configura Pumi apagará todas las computadoras que maneja automaticamente todos los dias a la hora indicada.
+- 1 -> 6 Programar una hora de apagado general: Se indica una hora de apagado general, a esta hora Pumi apagará todas las máquinas, lo cual es útil ya que de encontrarse encendidas 
 
 #### 2 Configurar imágenes:
 
@@ -119,8 +119,8 @@ El menú principal cuenta con 4 apartados:
 #### 4 Apagar o encender máquinas:
 - 4 Simplemente permite encender o apagar todas las maquinas en el dominio de Pumi.
 
-
 ### Limitaciones actuales:
+- Discutir si es conveniente que PUMI apague las computadoras antes de iniciar un cambio de imagen.
 - Las computadoras que intenten arrancar a través de la red dentro de la VLAN en el momento del cambio de imagen se someterán a la creación de imágenes sin validación por parte de PUMI.
 - Las imágenes deben residir en el directorio raíz de la partición/disco/USB designado como repositorio de imágenes.
 - Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a desplegar imágenes. Se están explorando soluciones automatizadas para tales escenarios.
