@@ -68,7 +68,8 @@ read opcion
 #Definir la entrada de GRUB
 
 case $opcion in
-        1) entrada_grub="menuentry 'Restore $nombre_e'{
+        1)read -p "Ingresa el nombre del disco destino (sda por ejemplo): " disk
+        entrada_grub="menuentry 'Restore $nombre_e'{
 ISO="$SCRIPT_DIR/clonezilla.iso"
 search --set -f "\$ISO"
 loopback loop "\$ISO"
@@ -76,39 +77,7 @@ linux (loop)/live/vmlinuz boot=live union=overlay username=user config component
 initrdefi (loop)/live/initrd.img
 }"
             ;;
-        2)
-        json=$(lsblk -J)
-
-# Extraer los nombres y tamaños de los discos hijos
-children=$(echo "$json" | jq -r '.blockdevices[] | select(has("children")) | .children[] | "\(.name) (\(.size))"')
-
-# Limpiar el array de discos hijos
-unset children_array
-
-# Almacenar los discos hijos en un array
-declare -a children_array
-
-# Recorrer la cadena de discos hijos y poblar el array con el nombre y el tamaño combinados
-while IFS= read -r line; do
-    children_array+=("$line")
-done <<< "$children"
-
-# Mostrar opciones
-echo "Selecciona un disco destino:"
-for ((i=0; i<${#children_array[@]}; i++)); do
-    echo "$(($i + 1)) ${children_array[$i]}"
-done
-
-# Solicitar al usuario que seleccione un hijo
-read -p "Ingresa el número del disco destino entre las opciones: " choice
-if [[ $choice =~ ^[0-9]+$ ]] && ((choice >= 1 && choice <= ${#children_array[@]})); then
-    selected_option="${children_array[$(($choice - 1))]}"
-    echo "Seleccionaste: $selected_option"
-else
-    echo "Opción inválida. Por favor ingresa un número entre 1 y ${#children_array[@]}."
-fi
-disk=$(echo "$selected_option" | cut -d' ' -f1)
-
+        2)read -p "Ingresa el nombre de la partición destino (sda2 por ejemplo): " disk
         entrada_grub="menuentry 'Restore $nombre_e'{
 ISO="$SCRIPT_DIR/clonezilla.iso"
 search --set -f "\$ISO"
