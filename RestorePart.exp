@@ -23,7 +23,6 @@ puts $num
 set disk [lrange $argv 3 3]
 puts $disk
 
-
 set timeout -1
 
 #Toma las Macs del archivo /pumi/log/Macs.csv que genero Restore.sh
