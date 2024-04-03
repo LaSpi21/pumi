@@ -126,6 +126,6 @@ El menú principal cuenta con 4 apartados:
 - Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a desplegar imágenes. Se están explorando soluciones automatizadas para tales escenarios.
 - El registro actualmente no contiene detalles más allá del nombre de la imagen y requiere una mayor elaboración para obtener una descripción más completa.
 - Clonezilla reconoce cuando se termina de realizar un cambio de imagen pero no logré automatizar su respuestas para que se reinicie en este punto, de esto deriva la existencia del tiempo limite de reinicio.
-- Los cambios que utilizan particiones de momento dependen de que la misma se encuentre en SDA2 (ToDo)
+- Se requiere conocer el nombre del disco o partición destino (sda o sda2 en general para discos SATA). Lo cual también implica que todas las maquinas deberían tener el mismo nombre de disco destino. Además las máquinas destino requieren que su disco sea de igual o mayor tamaño que el de la imagen incluso aunque la imagen no utilice todo el espacio del disco.
 
 
