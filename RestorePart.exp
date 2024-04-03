@@ -19,6 +19,10 @@ puts $increment
 set num [lrange $argv 2 2]
 puts $num
 
+#Toma el disco destino
+set disk [lrange $argv 3 3]
+puts $disk
+
 
 set timeout -1
 
@@ -29,7 +33,7 @@ spawn awk -f $SCRIPT_DIR/log/Macs.awk "$SCRIPT_DIR/log/Macs.csv"
 
 
 #Le pasa a clonezilla el codigo que ejecturá
-spawn ocs-live-feed-img -cbm netboot -dm start-new-dhcpd -lscm massive-deployment -mdst from-image -e1 auto -e2 -t -r -x -k -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img sda2
+spawn ocs-live-feed-img -cbm netboot -dm start-new-dhcpd -lscm massive-deployment -mdst from-image -e1 auto -e2 -t -r -x -k -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img $disk
 
 #Automatiza las interacciones con el usuario, despierta cada maquina en Macs.csv y luego reinicia el servidor.
 expect {
