@@ -77,11 +77,44 @@ initrdefi (loop)/live/initrd.img
 }"
             ;;
 
-        2) entrada_grub="menuentry 'Restore $nombre_e'{
+        2)
+        json=$(lsblk -J)
+
+# Extraer los nombres y tamaños de los discos hijos
+children=$(echo "$json" | jq -r '.blockdevices[] | select(has("children")) | .children[] | "\(.name) (\(.size))"')
+
+# Limpiar el array de discos hijos
+unset children_array
+
+# Almacenar los discos hijos en un array
+declare -a children_array
+
+# Recorrer la cadena de discos hijos y poblar el array con el nombre y el tamaño combinados
+while IFS= read -r line; do
+    children_array+=("$line")
+done <<< "$children"
+
+# Mostrar opciones
+echo "Selecciona un disco:"
+for ((i=0; i<${#children_array[@]}; i++)); do
+    echo "$(($i + 1)) ${children_array[$i]}"
+done
+
+# Solicitar al usuario que seleccione un hijo
+read -p "Ingresa el número del disco: " choice
+if [[ $choice =~ ^[0-9]+$ ]] && ((choice >= 1 && choice <= ${#children_array[@]})); then
+    selected_option="${children_array[$(($choice - 1))]}"
+    echo "Seleccionaste: $selected_option"
+else
+    echo "Opción inválida. Por favor ingresa un número entre 1 y ${#children_array[@]}."
+fi
+disk_name=$(echo "$selected_option" | cut -d' ' -f1)
+        
+        entrada_grub="menuentry 'Restore $nombre_e'{
 ISO="$SCRIPT_DIR/clonezilla.iso"
 search --set -f "\$ISO"
 loopback loop "\$ISO"
-linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/RestorePart.exp "$nombre_e" "$increment" "$num"\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
+linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/RestorePart.exp "$nombre_e" "$increment" "$num" "$disk"\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
 initrdefi (loop)/live/initrd.img
 }"
             ;;
