@@ -16,7 +16,7 @@ sudo chmod +x /usr/local/bin/pumi
 
 
 # Define dependencias
-dependencies=("crontab" "expect" "wakeonlan" "grub2" "ssh" "openssh-client" "ssmtp" "mpack" "iptables-persistent" "sshpass" "wget" "awk" "nmap")
+dependencies=("crontab" "expect" "wakeonlan" "grub2" "ssh" "openssh-client" "ssmtp" "mpack" "iptables-persistent" "sshpass" "wget" "awk" "jq" "nmap")
 
 # Instala dependencias en caso de no estar instaladas previamente
 for dep in "${dependencies[@]}"; do
