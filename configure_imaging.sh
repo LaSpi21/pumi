@@ -53,7 +53,7 @@ echo "100" | sudo tee -a "$repo_path_file" > /dev/null
 
 #Agrega la contraseña de pumi
 read -s -p "Indica la contraseña de Pumi: " p
-hash=$(echo -n "$pw" | md5sum | cut -d ' ' -f 1)
+hash=$(echo -n "$p" | md5sum | cut -d ' ' -f 1)
 echo "$hash" | sudo tee -a "$repo_path_file" > /dev/null
 
 echo "pumi configurado, el tiempo maximo por defecto para clonar imagenes es 100 minutos, puede cambiarlo desde pumi>Configurar acciones programadas"
