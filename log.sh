@@ -62,9 +62,9 @@ take_sign(){
     local serial=$3
     local user=$4
     
-    txt_content="error"
 
     txt_content=$(sudo ssh -n "$user@$ip_address" "cat ./Desktop/.Signature")
+    echo "$ip_address $txt_content"
     awk -F, -v pattern="$mac" -v signature="$txt_content" '$1 == pattern {$6=signature} 1' OFS="," "$log_csv" | sudo tee temp.csv && mv temp.csv "$log_csv"
 
     sudo ssh -n "$user@$ip_address" "sudo shutdown now"
