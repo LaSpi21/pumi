@@ -1,3 +1,4 @@
+  GNU nano 6.2                                                                                                                                                                                                                                                                                                          ./.pumi/run_script.sh                                                                                                                                                                                                                                                                                                                    
 #!/bin/bash
 
 #Indica la ruta del archivo para ubicar de forma relativa el resto
@@ -9,12 +10,14 @@ ssh_csv="$SCRIPT_DIR/log/ssh.csv"
 
 file=""
 
-echo "Recuerde que el usuario en el que se correra su script puede no ser administrado, ajuste su codigo para tal situación"
-echo "Por ejemplo, considere utilizar 'python3.11 -m pip install --user pygame' en lugar de 'python3.11 -m pip install  pygame'".
 
 read -e -p "Ingresa la ruta del script a implementar: " file
 
 run=$(cat "$file")
+
+read -p "Ingresa el usuario administrador de los nodos: " admin
+read -s -p "Ingresa la contraseña de admin de los nodos: " p
+
 
 
 #funcion que se encarga de automatizar la comunicacion con los nodos
@@ -23,11 +26,8 @@ adding_ssh() {
     local IP=$2
     local Serie=$3
     local user=$4
-    local Image=$5
-    local p=$6
 
-
-    sudo sshpass -p "$p" ssh-copy-id -o StrictHostKeyChecking=no "$user"@"$IP"
+    sudo sshpass -p "$p" ssh-copy-id -o StrictHostKeyChecking=no "$admin"@"$IP"
 }
 
 #funcion que se encarga de despertar a todos los nodos, ademas espera a que completen su booteo (con tiempo de sobra)
@@ -39,20 +39,21 @@ wake() {
 
     wakeonlan "$mac"
 
-    sleep 150
+    sleep 1
 
 }
 
-#funcion que se comunica y extrae la firma de los nodos (se puede trabajar para que extraiga mas información).
+#funcion que corre el script en los nodos.
 run_script(){
     local MAC=$1
     local IP=$2
     local Serie=$3
     local user=$4
-    local Image=$5
-    local p=$6
-    
-    sudo sshpass -p "$p" sudo ssh -n "$user@$ip_address" $run
+
+    sudo sshpass -p '$p' ssh -tt "$admin@$ip_address" 'echo "'"$p"'" | bash -c "'"$run"'"'
+
+
+    #sudo sshpass -p "$p" sudo ssh -n "$admin@$ip_address" $run
 }
 
 # Pregunta al usuario si necesita encender las computadoras
@@ -60,7 +61,7 @@ read -p "Se necesita encender las computadoras? (y/n): " response
 
 # Despierta los nodos solo si la respuesta es 'y'
 if [ "$response" = "y" ]; then
-    while IFS=, read -r mac ip_address serial user image sign; do
+    while IFS=, read -r mac ip_address serial user; do
         wake "$mac" "$ip_address" "$serial" "$user" &
     done < "$log_csv"
 
@@ -68,17 +69,17 @@ if [ "$response" = "y" ]; then
 fi
 
 #automatiza la conexion ssh
-while IFS=, read -r MAC IP Serial user Image p; do
-   run_script "$MAC" "$IP" "$Serial" "$user" "$Image" "$p" &
-done < "$ssh_csv"
+while IFS=, read -r MAC IP Serial user Image; do
+   adding_ssh "$MAC" "$IP" "$Serial" "$user" &
+done < "$log_csv"
 
 wait
 
 
 #corre el script indicado
-while IFS=, read -r mac ip_address serial user image sign; do
-   adding_ssh "$MAC" "$IP" "$Serial" "$user" "$Image" "$p" &
-done < "$ssh_csv"
+while IFS=, read -r mac ip_address serial user; do
+   run_script "$MAC" "$IP" "$Serial" "$user" &
+done < "$log_csv"
 
 wait
 
