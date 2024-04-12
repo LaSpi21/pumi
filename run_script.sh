@@ -1,12 +1,12 @@
-  GNU nano 6.2                                                                                                                                                                                                                                                                                                          ./.pumi/run_script.sh                                                                                                                                                                                                                                                                                                                    
 #!/bin/bash
 
 #Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+echo "Tome en cuenta al realizar su archivo script debe contener su shebang correpondiente"
+
 #toma la dirección de los csvs que puede necesitar utilizar
 log_csv="$SCRIPT_DIR/log/log.csv"
-ssh_csv="$SCRIPT_DIR/log/ssh.csv"
 
 file=""
 
@@ -18,7 +18,7 @@ run=$(cat "$file")
 read -p "Ingresa el usuario administrador de los nodos: " admin
 read -s -p "Ingresa la contraseña de admin de los nodos: " p
 
-
+remote_path=/home/"$admin"/Desktop/temp_script.sh
 
 #funcion que se encarga de automatizar la comunicacion con los nodos
 adding_ssh() {
@@ -39,7 +39,7 @@ wake() {
 
     wakeonlan "$mac"
 
-    sleep 1
+    sleep 150
 
 }
 
@@ -50,10 +50,12 @@ run_script(){
     local Serie=$3
     local user=$4
 
-    sudo sshpass -p '$p' ssh -tt "$admin@$ip_address" 'echo "'"$p"'" | bash -c "'"$run"'"'
+    sudo sshpass -p "$p" scp "$file" "$admin@$IP":"$remote_path"
 
+    sudo sshpass -p '$p' ssh -tt "$admin@$IP" 'echo "'"$p"'" | sudo -S bash "'"$remote_path"'"'
 
-    #sudo sshpass -p "$p" sudo ssh -n "$admin@$ip_address" $run
+    sudo sshpass -p '$p' ssh -tt "$admin@$IP" 'echo "'"$p"'" | sudo -S rm "'"$remote_path"'"'
+
 }
 
 # Pregunta al usuario si necesita encender las computadoras
@@ -77,10 +79,18 @@ wait
 
 
 #corre el script indicado
-while IFS=, read -r mac ip_address serial user; do
+while IFS=, read -r mac IP serial user; do
    run_script "$MAC" "$IP" "$Serial" "$user" &
 done < "$log_csv"
 
 wait
 
 echo "Scripts corridos"
+
+
+
+
+
+
+
+
