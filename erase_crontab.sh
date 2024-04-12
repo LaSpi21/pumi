@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 confirm=n
 read -p "Indique que acciones borrar, ingrese T para borrar TODAS las acciones, un número para borrar la acción de la línea que corresponda a ese número o c para cancelar [t/n°/c]: " confirm_input
 
