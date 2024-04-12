@@ -10,10 +10,35 @@ log_csv="$SCRIPT_DIR/log/log.csv"
 
 file=""
 
+custom="n"
+read -p "Utilizar un script personalizado de Pumi? [y/n]: " custom
 
-read -e -p "Ingresa la ruta del script a implementar: " file
+case $custom in
+  [yY]) custom=true ;;
+esac
 
-run=$(cat "$file")
+if [ "$custom" = true ]; then
+        echo "Scripts disponibles"
+        column_values=($(ls -d "$SCRIPT_DIR"/custom_scripts/* | xargs -I {} basename {} '.sh'))
+        PS3="Elegí un script: "
+        select file in "${column_values[@]}"; do
+            if [[ -n $file ]]; then
+                break
+            else
+                echo "Opcion invalida."
+                exit
+            fi
+        done
+
+        file="$SCRIPT_DIR/custom_scripts/$file.sh"
+
+
+
+else
+        read -e -p "Ingresa la ruta del script a implementar: " file
+
+fi
+
 
 read -p "Ingresa el usuario administrador de los nodos: " admin
 read -s -p "Ingresa la contraseña de admin de los nodos: " p
