@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 #Cambia el tiempo limite que espera clonezilla para reiniciarse en el archivo /pumi/Repo_path
 
