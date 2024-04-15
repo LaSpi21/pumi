@@ -9,5 +9,5 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 #imprime todas las entradas que no se encuentren comentadas, ToDo: dar formato amigable
-cat <(sudo crontab -l | grep -v '^#' | awk NF)
+cat <(sudo crontab -l | grep -v '^#' | awk NF) | nl
 
