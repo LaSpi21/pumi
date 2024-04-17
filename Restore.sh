@@ -93,10 +93,10 @@ done < "$log_csv"
 
 #copia las macs de las maquinas que recibiran imagen, solo las que se encuentren en macs_csv se usaran
 if [ "$failed" = true ]; then
-  sudo awk -F ',' '{print $1 "," $2}' "$fail_csv" | sudo tee "$macs_csv" > /dev/null
+  sudo awk -F ',' '{print}' "$fail_csv" | sudo tee "$macs_csv" > /dev/null
 
 elif [ "$new" = true ]; then
- sudo awk -F ',' '{print $1 "," $2}' "$new_csv" | sudo tee "$macs_csv" > /dev/null
+ sudo awk -F ',' '{print}' "$new_csv" | sudo tee "$macs_csv" > /dev/null
 #sudo truncate -s 0 "$new_csv"
 
 elif [ "$manual" = true ]; then
@@ -104,7 +104,7 @@ elif [ "$manual" = true ]; then
 #sudo truncate -s 0 "$new_csv"
 
 else
-sudo awk -F ',' '{print $1 "," $2}' "$log_csv" | sudo tee "$macs_csv" > /dev/null
+sudo awk -F ',' '{print}' "$log_csv" | sudo tee "$macs_csv" > /dev/null
 #sudo truncate -s 0 "$new_csv"
 
 fi
