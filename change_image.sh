@@ -60,10 +60,28 @@ case $manual in
     [yY]) manual=true ;;
   esac
 
+
+values=$(awk -F ',' '{print $7 "\n" $8}' "$SCRIPT_DIR/log/log.csv" | sort | uniq)
+
+PS3="Selecciona el nombre de disco o partición destino: "
+select option in $values; do
+    case $REPLY in
+        *)
+            # If the user selects an option, print it
+            if [[ ! -z $option ]]; then
+                disk="$option"
+                break
+            else
+                echo "Opción invalida."
+            fi
+            ;;
+    esac
+done
+
 if [ "$manual" = true ]; then
-        sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name" -m
+        sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name" -d "$disk" -m
 else
-        sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name"
+        sudo bash "$SCRIPT_DIR/Restore.sh" -i "$image_name" -d "$disk"
 fi
 
 
