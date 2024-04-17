@@ -34,11 +34,14 @@ log_day=$(date -d  "+$increment minutes" "+%d")
 log_month=$(date -d  "+$increment minutes" "+%m")
 
 
-while getopts ":i:fnrm" opt; do
+while getopts ":i:d:fnrm" opt; do
   case ${opt} in
     i )
       image_name="$OPTARG"
      ;;
+    d)disk="$OPTARG"
+     ;;
+
     f)
       failed=true
       ;;
@@ -114,7 +117,7 @@ mpack -s "Realizando un cambio de imagen a $image_name" "$SCRIPT_DIR"/log/log.cs
 
 
 #Indica la entrada de grub a utilizar y reinicia 
-sudo /usr/sbin/grub-reboot "Restore $image_name"
+sudo /usr/sbin/grub-reboot "Restore $image_name$disk"
 sleep 2
 /sbin/reboot
 
