@@ -213,14 +213,14 @@ echo "1. Disco"
 echo "2. Partición"
 read opcion
 
-date=$(printf "%02d-%02d-%02d %02d:%02d" 1900 "$month" "$day" "$hour" "$minute")
+
 
 
 case $opcion in
         1) values=$(awk -F ',' '{print $7}' "$SCRIPT_DIR/log/log.csv" | sort | uniq)
 
         for disk in $values; do
-
+            date_str="1900-$month-$day $hour:$minute:00"
             cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name -d "$disk""
 
 if [ "$repair_mode" = true ]; then
@@ -250,7 +250,11 @@ rm "$temp_file"
 
 echo Se agregó "$cron_line"
 
-new_date=$(date -d "$date + $increment minutes" +%m-%d %H:%M")
+
+
+# Use the date command with the constructed date string
+new_date=$(date -d "$date_str + $increment minutes" "+%m-%d %H:%M")
+
 
 done
 
