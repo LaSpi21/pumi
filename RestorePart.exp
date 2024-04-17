@@ -26,7 +26,7 @@ puts $disk
 set timeout -1
 
 #Toma las Macs del archivo /pumi/log/Macs.csv que genero Restore.sh
-spawn awk -f $SCRIPT_DIR/log/partitions_macs.awk filter="$disk"  "$SCRIPT_DIR/log/Macs.csv"
+spawn awk -f $SCRIPT_DIR/log/partitions_macs.awk filter=$disk  $SCRIPT_DIR/log/Macs.csv
     expect -re "(.*)\r\n"
     set mac_address $expect_out(1,string)
 
