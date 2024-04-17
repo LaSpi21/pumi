@@ -48,40 +48,45 @@ echo "1. Disco"
 echo "2. Partición"
 read opcion
 
-#Definir la entrada de GRUB
-
 case $opcion in
-        1)read -p "Ingresa el nombre del disco destino (sda por ejemplo): " disk
-        entrada_grub="menuentry 'Restore $nombre_e'{
-ISO="$SCRIPT_DIR/clonezilla.iso"
-search --set -f "\$ISO"
-loopback loop "\$ISO"
-linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/Restore.exp "$nombre_e" "$increment" "$num" "$disk"\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
-initrdefi (loop)/live/initrd.img
-}"
-            ;;
-        2)read -p "Ingresa el nombre de la partición destino (sda2 por ejemplo): " disk
-        entrada_grub="menuentry 'Restore $nombre_e'{
-ISO="$SCRIPT_DIR/clonezilla.iso"
-search --set -f "\$ISO"
-loopback loop "\$ISO"
-linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/RestorePart.exp "$nombre_e" "$increment" "$num" "$disk"\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
-initrdefi (loop)/live/initrd.img
-}"
-            ;;
-
-        *)
-        echo "Opción no válida. Por favor, selecciona 1 ó 2."
-        exit
-            ;;
+        1)destinies=$(awk -f "$SCRIPT_DIR"/log/disks.awk  "$SCRIPT_DIR"/log/log.csv | sort | uniq)
+                ;;
+        2)destinies=$(awk -f "$SCRIPT_DIR"/log/partitions.awk  "$SCRIPT_DIR"/log/log.csv | sort | uniq)
+                ;;
 esac
 
+for destiny in $destinies; do
+    # Definir la entrada de GRUB
+    case $opcion in
+      1)
+        entrada_grub="menuentry 'Restore $nombre_e$destiny'{
+ISO="$SCRIPT_DIR/clonezilla.iso"
+search --set -f "\$ISO"
+loopback loop "\$ISO"
+linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/Restore.exp "$nombre_e" "$increment" "$num" "$destiny"\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
+initrdefi (loop)/live/initrd.img
+}"
+            ;;
+        2)
+        entrada_grub="menuentry 'Restore $nombre_e$destiny'{
+ISO="$SCRIPT_DIR/clonezilla.iso"
+search --set -f "\$ISO"
+loopback loop "\$ISO"
+linux (loop)/live/vmlinuz boot=live union=overlay username=user config components quiet noswap edd=on nomodeset enforcing=0 noeject ocs_prerun=\\\"mount UUID="$repo_mount" /mnt\\\" ocs_prerun1=\\\"mount --bind /mnt /home/partimag/\\\" ocs_prerun2=\\\"sudo mount UUID="$pumi_mount" /home/user/\\\" ocs_live_run=\\\"expect -f /home/user$SCRIPT_DIR/RestorePart.exp "$nombre_e" "$increment" "$num" "$destiny"\\\" keyboard-layouts=\\\"us\\\" ocs_live_batch=\\\"yes\\\" locales=en_US.UTF-8 vga=788 ip= nosplash net.ifnames=0 splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1 findiso="\$ISO"
+initrdefi (loop)/live/initrd.img
+}"
+            ;;
+        *)
+            echo "Opción no válida. Por favor, selecciona 1 ó 2."
+            exit
+            ;;
+    esac
+
+    # Agregar la entrada de GRUB al archivo de configuración
+    echo "$entrada_grub" | sudo tee -a /etc/grub.d/40_custom > /dev/null
+done
 
 
-# Agregar la entrada de GRUB al archivo de configuración
-echo "$entrada_grub" | sudo tee -a /etc/grub.d/40_custom > /dev/null
 
 # Actualizar GRUB
 sudo update-grub
-
-
