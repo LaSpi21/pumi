@@ -27,6 +27,8 @@ repair_mode=false
 modo_interactivo=true
 retry=false
 onetimeonly=false
+increment=$(($(cat "$SCRIPT_DIR/Repo_path"| sed -n '5p') + 30))
+
 
 #toma la uuid del repositorio y su direccion
 uuid=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p')
@@ -206,7 +208,20 @@ if [ -z "$image_name" ]; then
 fi
 
 
-cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name"
+echo "Es la imagen un disco o una partición?"
+echo "1. Disco"
+echo "2. Partición"
+read opcion
+
+date=$(printf "%02d-%02d-%02d %02d:%02d" 1900 "$month" "$day" "$hour" "$minute")
+
+
+case $opcion in
+        1) values=$(awk -F ',' '{print $7}' "$SCRIPT_DIR/log/log.csv" | sort | uniq)
+
+        for disk in $values; do
+
+            cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name -d "$disk""
 
 if [ "$repair_mode" = true ]; then
   cron_line="$cron_line -f"
@@ -235,3 +250,43 @@ rm "$temp_file"
 
 echo Se agregó "$cron_line"
 
+new_date=$(date -d "$date + $increment minutes" +%m-%d %H:%M")
+
+done
+
+        
+                ;;
+        2)
+
+        cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name -d "$disk""
+
+if [ "$repair_mode" = true ]; then
+  cron_line="$cron_line -f"
+fi
+
+if [ "$retry" = true ]; then
+  cron_line="$cron_line -r"
+fi
+
+if [ "$onetimeonly" = true ]; then
+  cron_line="$cron_line -o"
+fi
+
+temp_file=$(mktemp)
+
+sudo crontab -l -u root > "$temp_file"
+
+
+echo "$cron_line" >> "$temp_file"
+
+sudo crontab -u root "$temp_file"
+
+
+rm "$temp_file"
+
+
+echo Se agregó "$cron_line"
+
+
+                ;;
+esac
