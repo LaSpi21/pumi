@@ -27,6 +27,8 @@ repair_mode=false
 modo_interactivo=true
 retry=false
 onetimeonly=false
+increment=$(($(cat "$SCRIPT_DIR/Repo_path"| sed -n '5p') + 30))
+
 
 #toma la uuid del repositorio y su direccion
 uuid=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '2p')
@@ -206,7 +208,18 @@ if [ -z "$image_name" ]; then
 fi
 
 
-cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name"
+echo "Es la imagen un disco o una partición?"
+echo "1. Disco"
+echo "2. Partición"
+read opcion
+
+
+case $opcion in
+        1) values=$(awk -F ',' '{print $7}' "$SCRIPT_DIR/log/log.csv" | sort | uniq)
+
+        for disk in $values; do
+            date_str="1900-$month-$day $hour:$min:00"
+            cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name -d "$disk""
 
 if [ "$repair_mode" = true ]; then
   cron_line="$cron_line -f"
@@ -234,4 +247,101 @@ rm "$temp_file"
 
 
 echo Se agregó "$cron_line"
+
+
+
+new_date=$(date -d "$date_str $increment minutes" "+%m-%d %H:%M")
+newday=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
+
+
+if [ "$weekday" != "*" ] && [ "$day" != "$new_day" ]; then
+    case $weekday in
+        Mon) weekday=Tue ;;
+        Tue)  weekday=Wed ;;
+        Wed) weekday=Thu ;;
+        Thu) weekday=Fri ;;
+        Fri)  weekday=Sat ;;
+        Sat)  weekday=Sun ;;
+        Sun)  weekday=Mon ;;
+    esac
+
+fi
+
+
+
+
+
+month=$(echo "$new_date" | cut -d'-' -f1)
+day=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
+hour=$(echo "$new_date" | cut -d' ' -f2 | cut -d':' -f1)
+min=$(echo "$new_date" | cut -d':' -f2)
+
+done
+               ;;
+        2)values=$(awk -F ',' '{print $8}' "$SCRIPT_DIR/log/log.csv" | sort | uniq)
+
+        for partition in $values; do
+            date_str="1900-$month-$day $hour:$min:00"
+            cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name -d "$partition""
+
+if [ "$repair_mode" = true ]; then
+  cron_line="$cron_line -f"
+fi
+
+if [ "$retry" = true ]; then
+  cron_line="$cron_line -r"
+fi
+
+if [ "$onetimeonly" = true ]; then
+  cron_line="$cron_line -o"
+fi
+
+temp_file=$(mktemp)
+
+sudo crontab -l -u root > "$temp_file"
+
+
+echo "$cron_line" >> "$temp_file"
+
+sudo crontab -u root "$temp_file"
+
+
+rm "$temp_file"
+
+
+echo Se agregó "$cron_line"
+
+
+new_date=$(date -d "$date_str $increment minutes" "+%m-%d %H:%M")
+newday=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
+
+
+if [ "$weekday" != "*" ] && [ "$day" != "$new_day" ]; then
+    case $weekday in
+        Mon) weekday=Tue ;;
+        Tue)  weekday=Wed ;;
+        Wed) weekday=Thu ;;
+        Thu) weekday=Fri ;;
+        Fri)  weekday=Sat ;;
+        Sat)  weekday=Sun ;;
+        Sun)  weekday=Mon ;;
+    esac
+
+fi
+
+
+
+month=$(echo "$new_date" | cut -d'-' -f1)
+day=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
+hour=$(echo "$new_date" | cut -d' ' -f2 | cut -d':' -f1)
+min=$(echo "$new_date" | cut -d':' -f2)
+
+done
+
+                ;;
+esac
+
+
+
+
 
