@@ -10,7 +10,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 
 #increment es la cantidad de tiempo que espera clonezilla para reiniciarse en minutos, se encuentra en el archivo /pumi/Repo_path
-increment=$(($(cat "$SCRIPT_DIR/Repo_path"| sed -n '5p') + 30))
+increment=$(($(cat "$SCRIPT_DIR/Repo_path"| sed -n '5p') + 20))
 
 #toma la dirección de los csvs que puede necesitar utilizar
 log_csv="$SCRIPT_DIR/log/log.csv"
