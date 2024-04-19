@@ -214,13 +214,11 @@ echo "2. Partición"
 read opcion
 
 
-
-
 case $opcion in
         1) values=$(awk -F ',' '{print $7}' "$SCRIPT_DIR/log/log.csv" | sort | uniq)
 
         for disk in $values; do
-            date_str="1900-$month-$day $hour:$minute:00"
+            date_str="1900-$month-$day $hour:$min:00"
             cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name -d "$disk""
 
 if [ "$repair_mode" = true ]; then
@@ -252,17 +250,41 @@ echo Se agregó "$cron_line"
 
 
 
-# Use the date command with the constructed date string
-new_date=$(date -d "$date_str + $increment minutes" "+%m-%d %H:%M")
+new_date=$(date -d "$date_str $increment minutes" "+%m-%d %H:%M")
+newday=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
 
+
+if [ "$weekday" != "*" ] && [ "$day" != "$new_day" ]; then
+    echo "Weekday needs adjustment"
+    # Calculate the number of days to add or subtract to adjust the weekday
+    case $weekday in
+        Mon) weekday=Tue ;;
+        Tue)  weekday=Wed ;;
+        Wed) weekday=Thu ;;
+        Thu) weekday=Fri ;;
+        Fri)  weekday=Sat ;;
+        Sat)  weekday=Sun ;;
+        Sun)  weekday=Mon ;;
+    esac
+
+fi
+
+
+
+
+
+month=$(echo "$new_date" | cut -d'-' -f1)
+day=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
+hour=$(echo "$new_date" | cut -d' ' -f2 | cut -d':' -f1)
+min=$(echo "$new_date" | cut -d':' -f2)
 
 done
+               ;;
+        2)values=$(awk -F ',' '{print $8}' "$SCRIPT_DIR/log/log.csv" | sort | uniq)
 
-        
-                ;;
-        2)
-
-        cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name -d "$disk""
+        for partition in $values; do
+            date_str="1900-$month-$day $hour:$min:00"
+            cron_line="$min $hour $day $month $weekday bash $SCRIPT_DIR/Restore.sh -i $image_name -d "$partition""
 
 if [ "$repair_mode" = true ]; then
   cron_line="$cron_line -f"
@@ -292,5 +314,38 @@ rm "$temp_file"
 echo Se agregó "$cron_line"
 
 
+new_date=$(date -d "$date_str $increment minutes" "+%m-%d %H:%M")
+newday=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
+
+
+if [ "$weekday" != "*" ] && [ "$day" != "$new_day" ]; then
+    echo "Weekday needs adjustment"
+    # Calculate the number of days to add or subtract to adjust the weekday
+    case $weekday in
+        Mon) weekday=Tue ;;
+        Tue)  weekday=Wed ;;
+        Wed) weekday=Thu ;;
+        Thu) weekday=Fri ;;
+        Fri)  weekday=Sat ;;
+        Sat)  weekday=Sun ;;
+        Sun)  weekday=Mon ;;
+    esac
+
+fi
+
+
+
+month=$(echo "$new_date" | cut -d'-' -f1)
+day=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
+hour=$(echo "$new_date" | cut -d' ' -f2 | cut -d':' -f1)
+min=$(echo "$new_date" | cut -d':' -f2)
+
+done
+
                 ;;
 esac
+
+
+
+
+
