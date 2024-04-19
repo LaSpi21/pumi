@@ -255,8 +255,6 @@ newday=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
 
 
 if [ "$weekday" != "*" ] && [ "$day" != "$new_day" ]; then
-    echo "Weekday needs adjustment"
-    # Calculate the number of days to add or subtract to adjust the weekday
     case $weekday in
         Mon) weekday=Tue ;;
         Tue)  weekday=Wed ;;
@@ -319,8 +317,6 @@ newday=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
 
 
 if [ "$weekday" != "*" ] && [ "$day" != "$new_day" ]; then
-    echo "Weekday needs adjustment"
-    # Calculate the number of days to add or subtract to adjust the weekday
     case $weekday in
         Mon) weekday=Tue ;;
         Tue)  weekday=Wed ;;
