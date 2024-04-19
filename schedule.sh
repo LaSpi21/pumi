@@ -254,7 +254,7 @@ new_date=$(date -d "$date_str $increment minutes" "+%m-%d %H:%M")
 newday=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
 
 
-if [ "$weekday" != "*" ] && [ "$day" != "$new_day" ]; then
+if [ "$weekday" != "*" ] && [ "$(expr "$day" + 0)" != "$(expr "$newday" + 0)" ]; then
     case $weekday in
         Mon) weekday=Tue ;;
         Tue)  weekday=Wed ;;
@@ -315,8 +315,7 @@ echo Se agregó "$cron_line"
 new_date=$(date -d "$date_str $increment minutes" "+%m-%d %H:%M")
 newday=$(echo "$new_date" | cut -d'-' -f2 | cut -d' ' -f1)
 
-
-if [ "$weekday" != "*" ] && [ "$day" != "$new_day" ]; then
+if [ "$weekday" != "*" ] && [ "$(expr "$day" + 0)" != "$(expr "$newday" + 0)" ]; then
     case $weekday in
         Mon) weekday=Tue ;;
         Tue)  weekday=Wed ;;
