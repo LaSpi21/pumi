@@ -76,7 +76,7 @@ read -p "Indica si agregar en modo batch (Se requiere un archivo .csv con format
 if [[ "$batch" == "y" ]]; then
   read -e -p "Ingresa la ruta del archivo .csv: " archivo_csv
   read -s -p "Indica la contraseña de las maquinas para automatizar la conexion por ssh: " p
-  while IFS=, read -r MAC IP Serial user Image sign disk partition" ; do
+  while IFS=, read -r MAC IP Serial user Image sign disk partition ; do
      batching "$MAC" "$IP" "$Serial" "$user" "$Image" "$disk" "$partition" "$p"
   done < "$archivo_csv"
 
