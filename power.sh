@@ -23,7 +23,7 @@ wake() {
     wakeonlan "$mac"
 }
 
-funcion para apagar todos los nodos
+#funcion para apagar todos los nodos
 shutdown(){
     echo apagando "$mac"
     sudo ssh -n "$user@$ip_address" "sudo shutdown now"
