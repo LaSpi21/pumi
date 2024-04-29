@@ -19,7 +19,8 @@ root=admin@pumi.com
 mailhub=smtp.gmail.com:587
 AuthUser="$mail"
 AuthPass="$pass""
-
+#AuthUser=ulab309@gmail.com
+#AuthPass=gmegydkshtjjtjry"
 
 echo "$conf" | sudo tee -a /etc/ssmtp/ssmtp.conf > /dev/null
 
@@ -34,6 +35,18 @@ repo_path=""
 echo Configurando repositorio de imagenes
 read -e -p "Ingresa la ruta al repositorio (ej. /media/user/repo/)" repo_path
 
+read -p "Utiliza la red un servidor DHCP? [y/n]: " answer
+
+# Convertir la respuesta a minúsculas para manejar diferentes entradas del usuario
+answer=$(echo "$answer" | tr '[:upper:]' '[:lower:]')
+
+# Verificar si la respuesta es 'y' o 'yes' para establecer dhcp en true, de lo contrario, en false
+if [[ "$answer" == "y" || "$answer" == "yes" ]]; then
+    dhcp=true
+else
+    dhcp=false
+fi
+
 #Completa el archivo /pumi/Repo_path con las rutas e uuids del repositorio y de la carpeta /pumi/
 echo "$repo_path" | sudo tee "$repo_path_file" > /dev/null
 
@@ -47,13 +60,12 @@ echo "$ID_pumi" | sudo tee -a "$repo_path_file" > /dev/null
 
 echo "$mail" | sudo tee -a "$repo_path_file" > /dev/null
 
+#Agrega un tiempo limite por defecto de 45 minutos para finalizar el cambio de imagen.
+echo "45" | sudo tee -a "$repo_path_file" > /dev/null
 
-#Agrega un tiempo limite por defecto de 100 minutos para finalizar el cambio de imagen.
-echo "100" | sudo tee -a "$repo_path_file" > /dev/null
+echo "$dhcp" | sudo tee -a "$repo_path_file" > /dev/null
 
-#Agrega la contraseña de pumi
-read -s -p "Indica la contraseña de Pumi: " p
-hash=$(echo -n "$p" | md5sum | cut -d ' ' -f 1)
-echo "$hash" | sudo tee -a "$repo_path_file" > /dev/null
 
-echo "pumi configurado, el tiempo maximo por defecto para clonar imagenes es 100 minutos, puede cambiarlo desde pumi>Configurar acciones programadas"
+echo "pumi configurado, el tiempo maximo por defecto para clonar imagenes es 45 minutos, puede cambiarlo desde pumi>Configurar acciones programadas"
+
+
