@@ -107,5 +107,3 @@ done
 
 # Actualizar GRUB
 sudo update-grub
-
-
