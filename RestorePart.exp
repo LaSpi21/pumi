@@ -15,12 +15,9 @@ puts $image_name
 set increment [lrange $argv 1 1]
 puts $increment
 
-#Toma la cantidad de maquinas en el .log del tercer parametro
-set num [lrange $argv 2 2]
-puts $num
 
 #Toma el disco destino
-set disk [lrange $argv 3 3]
+set disk [lrange $argv 2 2]
 puts $disk
 
 set timeout -1
@@ -36,9 +33,21 @@ expect {
     }
 }
 
+set M [llength [split $mac_address "\n"]]
+puts $M
+
+if {$M != 0} {
+    set num $M
+} else {
+    set num 100
+}
+
+puts $num
+
+
 #Le pasa a clonezilla el codigo que ejecturá
 
-set dhcp [lrange $argv 4 4]
+set dhcp [lrange $argv 3 3]
 puts $dhcp
 
 
@@ -77,6 +86,7 @@ if {$dhcp} {
 
     expect eof
 }
+
 
 
 
