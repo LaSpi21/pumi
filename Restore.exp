@@ -1,4 +1,3 @@
-  GNU nano 6.2                                                                                                                                                                                                                                                                                                               Restore.exp                                                                                                                                                                                                                                                                                                                         
 #!/usr/bin/expect
 
 #Este es el archivo que correrá clonezilla en su shell, contiene todos los parametros y automatizaciones requeridas para que el proceso sea desatendido.
