@@ -71,7 +71,7 @@ batching() {
 
 
 # Obtener entrada del usuario
-read -p "Indica si agregar en modo batch (Se requiere un archivo .csv con formato Mac,IP,Serie,user,,nombre de disco destino, nombre de particion destino [y/n, default = n]" batch
+read -p "Indica si agregar en modo batch (Se requiere un archivo .csv con formato Mac,IP,Serie,user,,,nombre de disco destino, nombre de particion destino [y/n, default = n]" batch
 
 if [[ "$batch" == "y" ]]; then
   read -e -p "Ingresa la ruta del archivo .csv: " archivo_csv
