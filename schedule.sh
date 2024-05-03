@@ -187,7 +187,7 @@ fi
 # Verificar si -i no está presente e image_name no está especificado
 if [ -z "$image_name" ]; then
   echo Imagenes disponibles
-  column_values=($(ls -d "$repo"*-img | xargs -I {} basename {} '-img'))
+  column_values=($(ls -d "$repo"*-img | sed 's/-img$//' | xargs -I {} basename {} | cut -d'-' -f1 | sort -u))
   # Prompt user with autocompletion
   PS3="Elegí una imagen: "
   select image_name in "${column_values[@]}"; do
