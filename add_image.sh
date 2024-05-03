@@ -51,15 +51,6 @@ fi
 
 # Escapa caracteres especiales
 nombre_e=$(echo "$nombre" | sed 's/[^a-zA-Z0-9]/_/g')
-imageimg="${nombre_e}-img"
-
-if [[ ! -d "$repo$imageimg" ]]; then
-    echo -e "${RED}Nombre de imagen inválido. No existe tal imagen en $repo.${NC}"
-    uso
-fi
-
-
-
 
 echo "Es la imagen un disco o una partición?"
 echo "1. Disco"
