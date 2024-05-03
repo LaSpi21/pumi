@@ -15,3 +15,6 @@ shutdown(){
 while IFS=, read -r mac ip_address serial user image sign; do
     shutdown "$mac" "$ip_address" "$serial" "$user" &
 done < "$log_csv"
+
+mail=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '4p')
+mpack -s "Apagando coomputadoras" "$mail" 
