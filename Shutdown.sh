@@ -17,4 +17,4 @@ while IFS=, read -r mac ip_address serial user image sign; do
 done < "$log_csv"
 
 mail=$(cat "$SCRIPT_DIR/Repo_path"| sed -n '4p')
-mpack -s "Apagando coomputadoras" "$mail" 
+mpack -s "Apagando coomputadoras" "$SCRIPT_DIR"/log/log.csv "$mail"  
