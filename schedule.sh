@@ -99,15 +99,6 @@ validar_dia_semana() {
   fi
 }
 
-# Función para validar el nombre de la imagen, obsoleto?
-validar_nombre_imagen() {
-  local nombre_imagen=$1
-  local imageimg="${nombre_imagen}-img"
-  if [[ ! -d "$repo$imageimg" ]]; then
-    echo -e "${RED}Nombre de imagen inválido. Debe ser un nombre de directorio en $repo.${NC}"
-    uso
-  fi
-}
 
 
 
