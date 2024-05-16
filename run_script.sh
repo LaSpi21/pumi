@@ -87,7 +87,7 @@ run_script(){
 
     sudo sshpass -p "$p" scp "$file" "$admin@$IP":"$remote_path"
 
-    sudo sshpass -p '$p' ssh -tt "$admin@$IP" 'echo "'"$p"'" | sudo -S bash "'"$remote_path $argv"'"'
+    sudo sshpass -p '$p' ssh -tt "$admin@$IP" 'echo "'"$p"'" | sudo -S bash "'"$remote_path"'" "'"$argv"'"'
 
     sudo sshpass -p '$p' ssh -tt "$admin@$IP" 'echo "'"$p"'" | sudo -S rm "'"$remote_path"'"'
 
