@@ -32,7 +32,17 @@ if [ "$custom" = true ]; then
 
         file="$SCRIPT_DIR/custom_scripts/$file.sh"
 
+    argv=""
 
+    
+    read -p "Requiere este script un argumento? (un nombre de paquete, libreria, etc?) [y/n]: " argp
+
+    case $argp in
+      [yY]) argp=true ;;
+    esac
+    if [ "$argp" = true ]; then
+      read -p "Ingrese el argumento": " argv
+    fi
 
 else
         read -e -p "Ingresa la ruta del script a implementar: " file
@@ -77,7 +87,7 @@ run_script(){
 
     sudo sshpass -p "$p" scp "$file" "$admin@$IP":"$remote_path"
 
-    sudo sshpass -p '$p' ssh -tt "$admin@$IP" 'echo "'"$p"'" | sudo -S bash "'"$remote_path"'"'
+    sudo sshpass -p '$p' ssh -tt "$admin@$IP" 'echo "'"$p"'" | sudo -S bash "'"$remote_path $argv"'"'
 
     sudo sshpass -p '$p' ssh -tt "$admin@$IP" 'echo "'"$p"'" | sudo -S rm "'"$remote_path"'"'
 
