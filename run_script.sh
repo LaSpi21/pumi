@@ -41,7 +41,7 @@ if [ "$custom" = true ]; then
       [yY]) argp=true ;;
     esac
     if [ "$argp" = true ]; then
-      read -p "Ingrese el argumento": " argv
+      read -p "Ingrese el argumento: " argv
     fi
 
 else
