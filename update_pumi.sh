@@ -31,7 +31,7 @@ case $restartGrub in
   [yY]) restartGrub=true ;;
 esac
 
-if [ "$custom" = true ]; then
+if [ "$restartGrub" = true ]; then
   sudo bash $TARGET_DIR/restartGrub.sh
 fi
 
