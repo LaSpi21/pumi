@@ -126,6 +126,9 @@ El menú principal cuenta con 4 apartados:
 #### 4 Apagar o encender máquinas:
 - 4 Simplemente permite encender o apagar todas las maquinas en el dominio de Pumi.
 
+#### 5 Actualizar Pumi:
+- 5 Actualiza Pumi a su versión main en git, mantiene la información de los logs y el archivo Repo_path. Siempre que la lógica de estos no se vea modificada no es necesario reinstalar Pumi.
+
 ### Limitaciones actuales:
 - Las computadoras que intenten arrancar a través de la red dentro de la VLAN en el momento del cambio de imagen se someterán a la creación de imágenes sin validación por parte de PUMI.
 - Las imágenes deben residir en el directorio raíz de la partición/disco/USB designado como repositorio de imágenes.
