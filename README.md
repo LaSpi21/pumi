@@ -115,8 +115,12 @@ El menú principal cuenta con 4 apartados:
 - 3 -> 3 Recuperar máquina: Las máquinas quitadas pueden ser recuperadas mediante esta opción.
 - 3 -> 4 Correr un script en las máquinas: permite enviar y ejecutar scripts de shell en las máquinas bajo el dominio de Pumi. Puede utilizarse uno de los scripts prediseñados o utilizar uno creado en el momento.
          Scripts presideñados disponibles:
-              actualizar paquetes (aptUpdate)
-              ingresar a BIOS (toBios)
+              Actualizar paquetes (aptUpdate)
+              Ingresar a BIOS (toBios)
+              Instalar modulos de python 3.11 (installPython311Module)
+              Instalar paquetes de Debian (installDebianPackage)
+              Instalar paquetes de R (installRPackage)
+  
 - 3 -> 5 Realizar un registro de las máquinas: Permite hacer un registro manual simple de las máquinas, este tipo de registros se hace automáticamente luego de cada cambio de imagen.
 
 #### 4 Apagar o encender máquinas:
