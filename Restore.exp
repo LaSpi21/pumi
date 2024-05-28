@@ -49,9 +49,9 @@ puts $num
 set dhcp [lrange $argv 3 3]
 puts $dhcp
 
-
+#estoy probando -k0 para clonar la tabla de partición como viene desde la imagen directamente, esto puede ser importante al trabajar con discos de distintos tamaños
 if {$dhcp} {
-    spawn ocs-live-feed-img -cbm netboot -dm auto-detect -lscm massive-deployment -mdst from-image -e1 auto -e2 -t -r -x -k -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img $disk
+    spawn ocs-live-feed-img -cbm netboot -dm auto-detect -lscm massive-deployment -mdst from-image -e1 auto -e2 -t -r -x -k0 -sc0 -p shutdown -md multicast --clients-to-wait $num --max-time-to-wait 120 start $image_name-img $disk
 
     expect {
         {//NOTE// If you choose "yes", you have to make sure your DHCP server provides enough number of IP address for all the clients. Besides, this mechanism is risky because all the PXE or uEFI network booting clients will enter DRBL or Clonezilla mode. Please make sure this is what you want.} {
