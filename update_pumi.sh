@@ -7,11 +7,12 @@ TARGET_DIR="$(cd "$(dirname "$0")" && pwd)"
 TEMP_DIR=$(mktemp -d)
 REPO_PATH_FILE="Repo_path"
 LOG_DIR="log"
+EXCLUDE_ISO="clonezilla.iso"
 
 git clone $REPO_URL $TEMP_DIR
 
 # Eliminar todos los contenidos en el directorio de destino excepto Repo_path y log
-find $TARGET_DIR -mindepth 1 -maxdepth 1 ! -name $REPO_PATH_FILE ! -name $LOG_DIR -exec rm -rf {} +
+find $TARGET_DIR -mindepth 1 -maxdepth 1 ! -name $REPO_PATH_FILE ! -name $LOG_DIR ! -name $EXCLUDE_ISO -exec rm -rf {} +
 
 # Eliminar todos los archivos no CSV en el directorio log
 find $TARGET_DIR/$LOG_DIR -type f ! -name '*.csv' -exec rm -f {} +
