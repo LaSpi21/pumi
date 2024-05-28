@@ -31,7 +31,8 @@ while true; do
     echo "2. Configurar imagenes"
     echo "3. Configurar máquinas"
     echo "4. Encender o apagar maquinas"
-    echo "5. Salir"
+    echo "5. Actualizar Pumi"
+    echo "6. Salir"
     
     read opcion
     
@@ -51,13 +52,16 @@ while true; do
         4)
             sudo bash "$SCRIPT_DIR"/power.sh
             ;;
-    
         5)
+            sudo bash "$SCRIPT_DIR"/update_pumi.sh
+            ;;
+   
+        6)
            echo "Saliendo.."
            break
            ;;
         *)
-            echo "Opción no válida. Por favor, selecciona 1, 2, 3, 4 ó 5."
+            echo "Opción no válida. Por favor, selecciona 1, 2, 3, 4, 5 ó 6."
             ;;
     esac
 done    
