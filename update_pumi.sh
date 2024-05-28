@@ -33,10 +33,9 @@ esac
 
 if [ "$restartGrub" = true ]; then
   sudo bash $TARGET_DIR/restartGrub.sh
-else
+fi
 
 #como esta accion esta fuera de todo submenú, se añade este separador
 echo "Presione cualquier tecla para continuar"
 read -n 1 -s -r -p ""
 
-fi
