@@ -37,7 +37,7 @@ uso() {
 
 
 echo Imagenes disponibles
-column_values=($(ls -d "$repo"*-img | xargs -I {} basename {} '-img'))
+column_values=($(ls -d "$repo"*-img | sed 's/-img$//' | xargs -I {} basename {} | cut -d'-' -f1 | sort -u))
 PS3="Elegí una imagen: "
 select image_name in "${column_values[@]}"; do
     if [[ -n image_name ]]; then
