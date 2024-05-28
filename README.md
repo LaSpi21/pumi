@@ -123,12 +123,12 @@ El menú principal cuenta con 4 apartados:
 - 4 Simplemente permite encender o apagar todas las maquinas en el dominio de Pumi.
 
 ### Limitaciones actuales:
-- Discutir si es conveniente que PUMI apague las computadoras antes de iniciar un cambio de imagen.
 - Las computadoras que intenten arrancar a través de la red dentro de la VLAN en el momento del cambio de imagen se someterán a la creación de imágenes sin validación por parte de PUMI.
 - Las imágenes deben residir en el directorio raíz de la partición/disco/USB designado como repositorio de imágenes.
 - Los cortes de energía o interrupciones de red durante los cambios de imagen requieren intervención manual para volver a desplegar imágenes. Se están explorando soluciones automatizadas para tales escenarios.
 - El registro actualmente no contiene detalles más allá del nombre de la imagen y requiere una mayor elaboración para obtener una descripción más completa.
 - Clonezilla reconoce cuando se termina de realizar un cambio de imagen pero no logré automatizar su respuestas para que se reinicie en este punto, de esto deriva la existencia del tiempo limite de reinicio.
-- Se requiere conocer el nombre del disco o partición destino (sda o sda2 en general para discos SATA). Además las máquinas destino requieren que su disco sea de igual o mayor tamaño que el de la imagen incluso aunque la imagen no utilice todo el espacio del disco.
+- Las máquinas destino requieren que su disco sea de igual o mayor tamaño que el de la imagen incluso aunque la imagen no utilice todo el espacio del disco.
+- Para pasar utilizar un disco de menor capacidad se requiere reducir el tamaño de las particiones en la imagen origen y volver a crear una imagen de disco (esta puede utilizarse luego para todas las maquínas). Luego se requiere recrear las particiones con tamaños suficientes para que entren en el disco destino (utilizando gparted desde un usb booteable de linux por ejemplo).
 
 
