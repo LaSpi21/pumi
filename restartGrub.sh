@@ -18,6 +18,10 @@ echo "$NEW_CONTENT" > /etc/grub.d/40_custom
 
 sudo update-grub
 
+#como esta accion esta fuera de todo submenú, se añade este separador
+echo "Presione cualquier tecla para continuar"
+read -n 1 -s -r -p ""
+
 
 
 
