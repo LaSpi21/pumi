@@ -134,7 +134,7 @@ if [ "$modo_interactivo" = true ]; then
   read -p "Ingresa el numero de día en el cual iniciar (1-31,*) Ingresa * para realizarlo todos los días que cumplan con el resto de criterios: " user_day
   read -p "Ingresa el mes en el cual iniciar (1-12,*)  Ingresa * para realizarlo todos los meses que cumplan con el resto de criterios: " user_month
   echo Imagenes disponibles
-  column_values=($(ls -d "$repo"*-img | xargs -I {} basename {} '-img'))
+  column_values=($(ls -d "$repo"*-img | sed 's/-img$//' | xargs -I {} basename {} | cut -d'-' -f1 | sort -u))
   PS3="Elegí una imagen: "
   select user_image in "${column_values[@]}"; do
       if [[ -n user_image ]]; then
