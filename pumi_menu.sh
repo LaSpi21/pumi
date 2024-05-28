@@ -52,6 +52,7 @@ while true; do
         4)
             sudo bash "$SCRIPT_DIR"/power.sh
             ;;
+            
         5)
             sudo bash "$SCRIPT_DIR"/update_pumi.sh
             ;;
