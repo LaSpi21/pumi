@@ -25,7 +25,7 @@ rm -rf $TEMP_DIR
 
 echo "Actualización completa."
 
-read -p "Se recomienda borrar las imagenes agregadas para asegurarse que las mismas son compatibles con la versión actual de Pumi, desea hacerlo ahora? [y/n]: restartGrub
+read -p "Se recomienda borrar las imagenes agregadas para asegurarse que las mismas son compatibles con la versión actual de Pumi, desea hacerlo ahora? [y/n]: " restartGrub
 
 case $restartGrub in
   [yY]) restartGrub=true ;;
