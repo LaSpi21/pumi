@@ -3,7 +3,7 @@
 #Indica la ruta del archivo para ubicar de forma relativa el resto
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-echo "Tome en cuenta al realizar su archivo script debe contener su shebang correpondiente"
+
 
 #toma la dirección de los csvs que puede necesitar utilizar
 log_csv="$SCRIPT_DIR/log/log.csv"
@@ -45,6 +45,7 @@ if [ "$custom" = true ]; then
     fi
 
 else
+        echo "Tome en cuenta al realizar su archivo script debe poder correr desatendido (por ejemplo, a sudo apt install ejemplo se le debe incluir su opcional -y) y contener su shebang correpondiente"
         read -e -p "Ingresa la ruta del script a implementar: " file
 
 fi
