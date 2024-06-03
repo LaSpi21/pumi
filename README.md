@@ -137,5 +137,6 @@ El menú principal cuenta con 4 apartados:
 - Clonezilla reconoce cuando se termina de realizar un cambio de imagen pero no logré automatizar su respuestas para que se reinicie en este punto, de esto deriva la existencia del tiempo limite de reinicio.
 - Las máquinas destino requieren que su disco sea de igual o mayor tamaño que el de la imagen incluso aunque la imagen no utilice todo el espacio del disco, por lo que las imagenes de disco deben realizarse en las maquinas de menor capacidad de la red.
 - Para pasar utilizar un disco de menor capacidad se requiere reducir el tamaño de las particiones en la imagen origen y volver a crear una imagen de disco (esta puede utilizarse luego para todas las maquínas). Luego se requiere recrear las particiones con tamaños suficientes para que entren en el disco destino (utilizando gparted desde un usb booteable de linux por ejemplo).
+- En este momento los archivos que pueden correrse a traves de ssh solo admiten un archivo bash o sh por lo que no es posible automatizar respuestas complejas que requieran codigo en tlc o expect.. refactorizar para permitir casos donde se requiera más de un archivo o un archivo de esta naturaleza.
 
 
